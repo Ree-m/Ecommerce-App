@@ -14,10 +14,10 @@ const handler = NextAuth({
     strategy: "jwt",
   },
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
 
     CredentialsProvider({
       async authorize(credentials, req) {
@@ -55,7 +55,7 @@ const handler = NextAuth({
   pages: {
     signIn: "/auth/login",
   },
-  secret: process.env.PRIVATE_KEY,
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
