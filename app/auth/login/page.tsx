@@ -32,7 +32,6 @@ const LoginPage = () => {
         alert("Wrong credentials");
       } else {
         // Login successful
-        alert(username)
       
         setName("");
         setEmail("");
