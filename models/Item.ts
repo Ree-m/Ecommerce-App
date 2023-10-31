@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 const ItemSchema = new Schema({
 
@@ -12,8 +12,10 @@ const ItemSchema = new Schema({
         required: true,
     },
     parentCategory: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref:'Category'
     },
+
     position: {
         type: Number,
         required: true,

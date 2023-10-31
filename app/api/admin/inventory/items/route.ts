@@ -4,11 +4,10 @@ import connectMongo from "@/utils/connectMongo";
 
 connectMongo();
 
-export async function POST(req) {
+export async function POST(request) {
 
     try {
-        const { serialNumber, name, parentCategory, position, price, image, status } = await req.json();
-        console.log("req.json()", await req)
+        const { serialNumber, name, parentCategory, position, price, image, status } = await request.json();
 
         const itemDoc = await Item.create({
             serialNumber, name, parentCategory, position, price, image, status
@@ -23,7 +22,7 @@ export async function POST(req) {
     }
 }
 
-export async function GET(req, res) {
+export async function GET() {
     try {
         const items = await Item.find()
         console.log(items)

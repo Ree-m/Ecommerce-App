@@ -9,9 +9,9 @@ export default function Home() {
 
   return (
     <main >
-      hello world  { username? `${username}`:``}
-      <button onClick={()=>signOut()}>signOut</button>
-      <Link href="/auth/login">Login</Link>
+      hello world  {username ? `${username}` : ``}
+      <button onClick={() => signOut()}>signOut</button>
+      {!username && <Link href="/auth/login">Login</Link>}
 
     </main>
   )
