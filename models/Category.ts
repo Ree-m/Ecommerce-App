@@ -10,6 +10,7 @@ const CategorySchema = new Schema({
     parentCategory: {
         type: mongoose.Types.ObjectId,
         ref: 'Category',
+        default:'null'
     },
 
     icon: {

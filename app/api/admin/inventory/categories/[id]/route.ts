@@ -4,7 +4,7 @@ import Category from "@/models/Category";
 
 connectMongo()
 
-export async function DELETE(request) {
+export async function DELETE(request:Request) {
     try {
         const { url } = request;
         console.log("url", url)
@@ -28,7 +28,7 @@ export async function DELETE(request) {
     }
 }
 
-export async function PUT(request) {
+export async function PUT(request:Request) {
     try {
         const { url } = request;
         console.log("url", url)

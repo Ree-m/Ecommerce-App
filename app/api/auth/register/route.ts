@@ -2,9 +2,9 @@ import User from "@/models/User";
 import connectMongo from "@/utils/connectMongo";
 import {  NextResponse } from "next/server";
 
-export async function POST(request) {
+export async function POST(request:Request) {
   connectMongo();
-  const { name, email, password } = await request.json();
+  const { name, email,role, password } = await request.json();
   console.log("name", name, "email", email, "password", password);
 
   try {
@@ -15,8 +15,18 @@ export async function POST(request) {
     const user = await User.create({
       name,
       email,
-      password,
+      role,
+      password
+      
     });
+
+    const isAdminEmail = email === 'admin@admin.com';
+
+    if (isAdminEmail) {
+      user.role = 'admin';
+    }
+
+
     await user.save();
     console.log("user added");
     return NextResponse.json(user);

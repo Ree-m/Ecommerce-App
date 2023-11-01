@@ -4,7 +4,6 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { set } from "mongoose";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +45,7 @@ const LoginPage = () => {
   return (
     <div >
       <form onSubmit={login}>
-        <div >
+        <div>
           <h2>Login</h2>
           <input
             type="text"
@@ -78,7 +77,7 @@ const LoginPage = () => {
 
         </div>
       </form>
-      <button onClick={() => signIn('google')}>sign in with google</button>
+      <button onClick={()=>signIn('google')}>Sign in with google</button>
 
     </div>
   );

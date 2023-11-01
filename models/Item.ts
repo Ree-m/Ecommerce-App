@@ -2,11 +2,6 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 const ItemSchema = new Schema({
 
-    serialNumber: {
-        type: Number,
-        required: true,
-        unique: true
-    },
     name: {
         type: String,
         required: true,

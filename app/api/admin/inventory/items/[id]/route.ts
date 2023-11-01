@@ -4,9 +4,9 @@ import Item from "@/models/Item";
 
 connectMongo()
 
-export async function DELETE(request) {
+export async function DELETE(request:Request) {
     try {
-        const { url } = request;
+        const { url } =  request;
         console.log("url", url)
 
         const itemId = url?.split("/").pop();
@@ -24,16 +24,16 @@ export async function DELETE(request) {
     }
 }
 
-export async function PUT(request) {
+export async function PUT(request:Request) {
     try {
         const { url } = request;
         console.log("url", url)
 
         const itemId = url?.split("/").pop();
         console.log("itemId", itemId)
-        const { serialNumber, name, parentCategory, position, price, image, status } = await request.json();
+        const {  name, parentCategory, position, price, image, status } = await request.json();
 
-        const updatedItem = await Item.updateOne({ _id: itemId }, { serialNumber, name, parentCategory, position, price, image, status });
+        const updatedItem = await Item.updateOne({ _id: itemId }, { name, parentCategory, position, price, image, status });
         return NextResponse.json({ message: "Item updated", updatedItem });
     } catch (error) {
         return NextResponse.json(`Error:${error}`)

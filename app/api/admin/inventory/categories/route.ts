@@ -4,7 +4,7 @@ import connectMongo from "@/utils/connectMongo";
 
 connectMongo();
 
-export async function POST(request) {
+export async function POST(request:Request) {
 
     try {
         const {  name, parentCategory,icon, position, status } = await request.json();
