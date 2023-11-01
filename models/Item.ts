@@ -8,7 +8,8 @@ const ItemSchema = new Schema({
     },
     parentCategory: {
         type: mongoose.Types.ObjectId,
-        ref:'Category'
+        ref:'Category',
+        default:'null'
     },
 
     position: {

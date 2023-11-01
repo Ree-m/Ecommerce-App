@@ -1,18 +1,28 @@
-import { NextResponse ,NextRequest} from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Item from "@/models/Item";
+import Category from "@/models/Category";
 import connectMongo from "@/utils/connectMongo";
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextScript } from "next/document";
 
 connectMongo();
 
-export async function POST(request:Request) {
+export async function POST(request: Request) {
 
     try {
         const { name, parentCategory, position, price, image, status } = await request.json();
-        console.log("name, parentCategory, position, price, image, status",name, parentCategory, position, price, image, status)
+        console.log("name, parentCategory, position, price, image, status", name, parentCategory, position, price, image, status)
+        const category = await Category.findOne({ name: parentCategory });
+
+        if (!category) {
+            return NextResponse.json("Category not found");
+        }
+
         const itemDoc = await Item.create({
-            name, parentCategory, position, price, image, status
+            name,
+            parentCategory: category._id,
+            position,
+            price,
+            image,
+            status
         })
         console.log(itemDoc)
 

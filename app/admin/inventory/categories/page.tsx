@@ -1,6 +1,7 @@
 import { revalidateTag } from 'next/cache'
 
 import Delete from "../../adminComponents/Delete"
+import Edit from '../../adminComponents/Edit';
 
 async function fetchCategories() {
     const response = await fetch(`http://localhost:3000/api/admin/inventory/categories`,
@@ -9,7 +10,7 @@ async function fetchCategories() {
     console.log("data", data)
     return data
 }
-interface CategoryInterface {
+export interface CategoryInterface {
     _id: string,
     name: string,
     icon: string,
@@ -30,6 +31,7 @@ export default async function CategoriesPage() {
                     <div>
                         <h2>{category.name}</h2>
                         <Delete endpoint={`http://localhost:3000/api/admin/inventory/categories/${category._id}`} />
+                        <Edit endpoint={`http://localhost:3000/api/admin/inventory/categories/${category._id}`} category={category}/>
                     </div>
                 ))}
             </div>

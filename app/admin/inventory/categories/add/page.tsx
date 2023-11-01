@@ -5,13 +5,13 @@ import { useState, useEffect } from "react"
 export default function AddCategoryPage() {
     const [name, setName] = useState<string|null>(null)
     const [parentCategory, setParentCategory] = useState<string|null>(null)
-    const [positon, setPosition] = useState<number|null>(null)
+    const [position, setPosition] = useState<number|null>(null)
     const [icon, setIcon] = useState<string|null>(null)
     const [status, setStatus] = useState<string|null>(null)
 
 
 
-    async function addCategory(e) {
+    async function addCategory(e:React.FormEvent<HTMLFormElement>) {
         try {
             e.preventDefault();
             console.log("start adding category")
@@ -20,7 +20,7 @@ export default function AddCategoryPage() {
                 body: JSON.stringify({
                     name,
                     parentCategory,
-                    positon,
+                    position,
                     icon,
                     status
                 }),
@@ -46,24 +46,22 @@ export default function AddCategoryPage() {
 
     }
 
-    console.log("name", name,"position",positon+1)
-
     return (
         <div>
 
             <h1>Add Category</h1>
             <form onSubmit={addCategory}>
                 <label>Name</label>
-                <input type="text" onChange={(e) => setName(e.target.value)} />
+                <input type="text" onChange={(e) => setName(e.target.value)} required/>
 
                 <label>Parent Category</label>
                 <input type="text" onChange={(e) => setParentCategory(e.target.value)} />
                 <label>Position</label>
-                <input type="number" onChange={(e) => setPosition(Number(e.target.value))} />
+                <input type="number" onChange={(e) => setPosition(+e.target.value)} required/>
                 <label>Icon</label>
-                <input type="text" onChange={(e) => setIcon(e.target.value)} />
+                <input type="text" onChange={(e) => setIcon(e.target.value)} required/>
                 <label>Status</label>
-                <input type="text" onChange={(e) => setStatus(e.target.value)} />
+                <input type="text" onChange={(e) => setStatus(e.target.value)} required />
                 <input type="submit" value="Add Category" />
             </form>
         </div>

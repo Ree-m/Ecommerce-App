@@ -8,7 +8,7 @@ export async function POST(request:Request) {
 
     try {
         const {  name, parentCategory,icon, position, status } = await request.json();
-
+console.log("server, position",position,name)
         const categoryDoc = await Category.create({
              name, parentCategory,icon, position, status
         })

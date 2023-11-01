@@ -3,16 +3,17 @@
 import { useState, useEffect } from "react"
 
 export default function AddItemPage() {
-    const [name, setName] = useState<string>("")
-    const [parentCategory, setParentCategory] = useState<string>("")
-    const [positon, setPosition] = useState<number>()
-    const [price, setPrice] = useState<number>()
-    const [image, setImage] = useState<string>("")
-    const [status, setStatus] = useState<string>("")
+    const [name, setName] = useState<string|null>(null)
+    const [parentCategory, setParentCategory] = useState<string|null>(null)
+    const [position, setPosition] = useState<number|null>(null)
+    const [price, setPrice] = useState<number|null>(null)
+    const [image, setImage] = useState<string|null>(null)
+    const [status, setStatus] = useState<string|null>(null)
 
 
 
-    async function addItem(e) {
+    async function addItem(e:React.FormEvent<HTMLFormElement>
+        ) {
         try {
             e.preventDefault();
             console.log("start adding item")
@@ -21,7 +22,7 @@ export default function AddItemPage() {
                 body: JSON.stringify({
                     name,
                     parentCategory,
-                    positon,
+                    position,
                     price,
                     image,
                     status
@@ -50,7 +51,6 @@ export default function AddItemPage() {
 
     }
 
-    console.log("name", name)
 
     return (
         <div>
@@ -62,9 +62,9 @@ export default function AddItemPage() {
                 <label>Parent Category</label>
                 <input type="text" onChange={(e) => setParentCategory(e.target.value)} />
                 <label>Position</label>
-                <input type="number" onChange={(e) => setPosition(Number(e.target.value))} />
+                <input type="number" onChange={(e) => setPosition(+e.target.value)} />
                 <label>Price</label>
-                <input type="number" onChange={(e) => setPrice(Number(e.target.value))} />
+                <input type="number" onChange={(e) => setPrice(+e.target.value)} />
                 <label>Image</label>
                 <input type="text" onChange={(e) => setImage(e.target.value)} />
                 <label>Status</label>
