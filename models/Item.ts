@@ -7,7 +7,7 @@ const ItemSchema = new Schema({
         required: true,
     },
     parentCategory: {
-        type: mongoose.Types.ObjectId,
+        type:String,
         ref:'Category',
         default:'null'
     },

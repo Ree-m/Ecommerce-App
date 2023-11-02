@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function EditPage({ params}:{params:{id:string}}) {
+export default function EditPage({ params }: { params: { id: string } }) {
     const [name, setName] = useState<string | null>(null)
     const [parentCategory, setParentCategory] = useState<string | null>(null)
     const [position, setPosition] = useState<number | null>(null)
@@ -11,7 +11,7 @@ export default function EditPage({ params}:{params:{id:string}}) {
     const [status, setStatus] = useState<string | null>(null)
     const router = useRouter()
     const itemId = params.id
-    console.log("itemId",params, params.id)
+    console.log("itemId", params, params.id)
 
     async function onEdit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -32,9 +32,10 @@ export default function EditPage({ params}:{params:{id:string}}) {
                 credentials: "include",
             });
             const responseData = await response.json()
-            console.log("resposnedata",responseData)
-            if (responseData==='Item edited') {
+            console.log("response data", responseData)
+            if (responseData === 'Item edited') {
                 console.log("edited");
+                router.refresh()
                 router.push(`/admin/inventory/items`)
 
             } else {

@@ -4,19 +4,27 @@ import connectMongo from "@/utils/connectMongo";
 
 connectMongo();
 
-export async function POST(request:Request) {
+export async function POST(request: Request) {
 
     try {
-        const {  name, parentCategory,icon, position, status } = await request.json();
-console.log("server, position",position,name)
+        const { name, parentCategory, icon, position, status } = await request.json();
+
+        console.log("server, position", position, name)
+        const category = await Category.findOne({ name: parentCategory });
+
         const categoryDoc = await Category.create({
-             name, parentCategory,icon, position, status
+            name,
+            parentCategory: category ? category._id : null,
+
+            icon,
+            position,
+            status
         })
         console.log(categoryDoc)
 
         categoryDoc.save()
         console.log("Category added")
-        return NextResponse.json(categoryDoc)
+        return NextResponse.json("Category added")
     } catch (error) {
         return NextResponse.json(`Error:${error}`)
     }

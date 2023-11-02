@@ -4,7 +4,11 @@ import Link from 'next/link';
 
 async function fetchCategories() {
     const response = await fetch(`http://localhost:3000/api/admin/inventory/categories`,
-        { cache: 'no-cache' })
+        {
+            cache: 'no-cache',
+            next: { revalidate: 0 }
+        }
+    )
     const data = await response.json()
     console.log("data", data)
     return data
@@ -24,6 +28,8 @@ export default async function CategoriesPage() {
     return (
         <div>
             Categories Page
+            <Link href={`/admin/inventory/categories/add`}>Add Category</Link>
+
 
             <div>
                 {categories && categories.map((category: CategoryInterface, index: number) => (

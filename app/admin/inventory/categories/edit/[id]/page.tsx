@@ -34,6 +34,7 @@ export default function EditPage({params}:{params:{id:string}}) {
             console.log("resposnedata",responseData)
             if (responseData==='Category edited') {
                 console.log("edited");
+                router.refresh()
                 router.push(`/admin/inventory/categories`)
 
             } else {
@@ -47,7 +48,7 @@ export default function EditPage({params}:{params:{id:string}}) {
     }
     return (
         <div>
-            <h1>Edit Item</h1>
+            <h1>Edit Category</h1>
             <form onSubmit={onEdit}>
                 <label>Name</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />

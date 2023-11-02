@@ -2,7 +2,10 @@ import Delete from "../../adminComponents/Delete"
 import Link from 'next/link'
 async function fetchItems() {
     const response = await fetch(`http://localhost:3000/api/admin/inventory/items`,
-    {cache:'no-cache'}
+        {
+            cache: 'no-cache',
+            next: { revalidate: 0 }
+        }
     )
     const data = await response.json()
     console.log("data", data)

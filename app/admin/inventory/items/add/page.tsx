@@ -1,14 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-
+import { useRouter } from "next/navigation"
+import { useItems } from "@/app/context/ItemContext"
 export default function AddItemPage() {
-    const [name, setName] = useState<string>("")
+    const [name, setName] = useState<string | null>(null)
     const [parentCategory, setParentCategory] = useState<string | null>(null)
     const [position, setPosition] = useState<number | null>(null)
     const [price, setPrice] = useState<number | null>(null)
-    const [image, setImage] = useState<string>("")
-    const [status, setStatus] = useState<string>("")
+    const [image, setImage] = useState<string | null>(null)
+    const [status, setStatus] = useState<string | null>(null)
+    const router = useRouter()
 
 
 
@@ -38,20 +40,21 @@ export default function AddItemPage() {
             const responseData = await response.json()
             console.log(responseData)
             if (responseData === "Item added") {
-                console.log("Item added")
-            } else if (responseData === "Item added") {
+            
+                console.log('Item added');
+                router.refresh()
+                router.push('/admin/inventory/items');
+                console.log("end adding")
+            } else if (responseData !== "Item added") {
                 console.log("Check if category exists")
 
             } else {
                 console.log("Error: try adding item later")
             }
-
-
         } catch (error) {
-            console.log(`Error:${error}`)
+            console.log(`Error items:${error}`)
 
         }
-
     }
 
     return (

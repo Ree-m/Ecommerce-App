@@ -1,7 +1,8 @@
 "use client"
-
+import { useRouter } from "next/navigation";
 
 export default function Delete(endpoint:{endpoint:string}) {
+    const router =useRouter()
 
     async function onDelete() {
         try {
@@ -12,8 +13,7 @@ export default function Delete(endpoint:{endpoint:string}) {
             });
             if(response.ok){
                 console.log("deleted");
-
-
+                router.refresh()
             }else{
                 console.log(`Error: try deleting later`)
             }
