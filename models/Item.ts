@@ -9,7 +9,7 @@ const ItemSchema = new Schema({
     parentCategory: {
         type:String,
         ref:'Category',
-        default:'null'
+        // default:'null'
     },
 
     position: {

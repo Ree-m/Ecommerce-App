@@ -37,16 +37,11 @@ export async function PUT(request:Request) {
         console.log("categoryId", categoryId)
         const { name, parentCategory, icon, position, status } = await request.json();
 
-        // const updatedCategory = await Category.updateOne({ _id: categoryId }, { name, parentCategory, icon, position, status });
-        
-        // Retrieve the existing item from the database
         const existingItem = await Category.findOne({ _id: categoryId });
 
-        // Check which fields are being updated and update them
-        if (name) existingItem.name = name;
+        if (name) existingItem.name = name.toLowerCase();
 
         if (parentCategory !== null) {
-            // Set parentCategory to a valid ObjectId, ensuring it exists in the 'Category' model
             const categoryExists = await Category.findOne({name:parentCategory});
             if (categoryExists) {
                 existingItem.parentCategory = parentCategory._id;

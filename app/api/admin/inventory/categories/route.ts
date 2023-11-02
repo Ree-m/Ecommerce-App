@@ -13,9 +13,8 @@ export async function POST(request: Request) {
         const category = await Category.findOne({ name: parentCategory });
 
         const categoryDoc = await Category.create({
-            name,
+            name:name.toLowerCase(),
             parentCategory: category ? category._id : null,
-
             icon,
             position,
             status

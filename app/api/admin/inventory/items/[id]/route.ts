@@ -39,7 +39,7 @@ export async function PUT(request: Request) {
         const existingItem = await Item.findOne({ _id: itemId });
 
         // Check which fields are being updated and update them
-        if (name) existingItem.name = name;
+        if (name) existingItem.name = name.toLowerCase();
 
         if (parentCategory !== null) {
             // Set parentCategory to a valid ObjectId, ensuring it exists in the 'Category' model

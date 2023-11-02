@@ -11,7 +11,7 @@ async function fetchItems() {
     console.log("data", data)
     return data
 }
-interface ItemInterface {
+export interface ItemInterface {
     _id: string,
     name: string,
     image: string,
