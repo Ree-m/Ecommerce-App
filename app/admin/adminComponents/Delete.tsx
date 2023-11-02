@@ -1,6 +1,5 @@
 "use client"
 
-import { revalidateTag } from "next/cache";
 
 export default function Delete(endpoint:{endpoint:string}) {
 
@@ -13,7 +12,6 @@ export default function Delete(endpoint:{endpoint:string}) {
             });
             if(response.ok){
                 console.log("deleted");
-                revalidateTag('collection')
 
 
             }else{

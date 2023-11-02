@@ -12,13 +12,9 @@ export async function POST(request: Request) {
         console.log("name, parentCategory, position, price, image, status", name, parentCategory, position, price, image, status)
         const category = await Category.findOne({ name: parentCategory });
 
-        if (!category) {
-            return NextResponse.json("Category not found");
-        }
-
         const itemDoc = await Item.create({
             name,
-            parentCategory: category._id,
+            parentCategory: category ? category._id : null,
             position,
             price,
             image,

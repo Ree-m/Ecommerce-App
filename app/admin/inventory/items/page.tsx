@@ -1,9 +1,8 @@
-import { revalidateTag } from 'next/cache'
 import Delete from "../../adminComponents/Delete"
 import Link from 'next/link'
 async function fetchItems() {
     const response = await fetch(`http://localhost:3000/api/admin/inventory/items`,
-    { next: { tags: ['collection'] } }
+    {cache:'no-cache'}
     )
     const data = await response.json()
     console.log("data", data)
@@ -31,12 +30,13 @@ export default async function ItemsPage() {
             Items Page
 
             <div>
-                <Link href={`/items/add`}>Add Item</Link>
+                <Link href={`/admin/inventory/items/add`}>Add Item</Link>
 
                 {items && items.map((item: ItemInterface, index: number) => (
                     <div key={index}>
                         <h2>{item.name}</h2>
                         <Delete endpoint={`http://localhost:3000/api/admin/inventory/items/${item._id}`} />
+                        <Link href={`/admin/inventory/items/edit/${item._id}`}>Edit</Link>
                     </div>
                 ))}
             </div>

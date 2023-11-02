@@ -38,7 +38,7 @@ export async function PUT(request:Request) {
         const { name, parentCategory, icon, position, status } = await request.json();
 
         const updatedCategory = await Category.updateOne({ _id: categoryId }, { name, parentCategory, icon, position, status });
-        return NextResponse.json({ message: "Category updated", updatedCategory });
+        return NextResponse.json("Category edited");
     } catch (error) {
         return NextResponse.json(`Error:${error}`)
 

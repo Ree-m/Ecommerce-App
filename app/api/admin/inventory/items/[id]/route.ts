@@ -32,9 +32,11 @@ export async function PUT(request:Request) {
         const itemId = url?.split("/").pop();
         console.log("itemId", itemId)
         const {  name, parentCategory, position, price, image, status } = await request.json();
+        console.log( "name, category,etc",name, parentCategory, position, price, image, status)
 
         const updatedItem = await Item.updateOne({ _id: itemId }, { name, parentCategory, position, price, image, status });
-        return NextResponse.json({ message: "Item updated", updatedItem });
+        console.log("updatedItem",updatedItem)
+        return NextResponse.json("Item edited");
     } catch (error) {
         return NextResponse.json(`Error:${error}`)
 

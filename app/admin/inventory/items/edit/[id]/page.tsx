@@ -1,26 +1,26 @@
 "use client"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { useState, useEffect } from "react"
-
-export default function AddItemPage() {
-    const [name, setName] = useState<string>("")
+export default function EditPage({ params}:{params:{id:string}}) {
+    const [name, setName] = useState<string | null>(null)
     const [parentCategory, setParentCategory] = useState<string | null>(null)
     const [position, setPosition] = useState<number | null>(null)
     const [price, setPrice] = useState<number | null>(null)
-    const [image, setImage] = useState<string>("")
-    const [status, setStatus] = useState<string>("")
+    const [image, setImage] = useState<string | null>(null)
+    const [status, setStatus] = useState<string | null>(null)
+    const router = useRouter()
+    const itemId = params.id
+    console.log("itemId",params, params.id)
 
-
-
-    async function addItem(e: React.FormEvent<HTMLFormElement>
-    ) {
+    async function onEdit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
         try {
-            e.preventDefault();
-            console.log("start adding item")
-            console.log("State values: name", name, "parentCategory", parentCategory, "position", position, "price", price, "image", image, "status", status);
-
-            const response = await fetch(`http://localhost:3000/api/admin/inventory/items`, {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3000/api/admin/inventory/items/${itemId}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     name,
                     parentCategory,
@@ -29,35 +29,26 @@ export default function AddItemPage() {
                     image,
                     status
                 }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 credentials: "include",
-
-            })
+            });
             const responseData = await response.json()
-            console.log(responseData)
-            if (responseData === "Item added") {
-                console.log("Item added")
-            } else if (responseData === "Item added") {
-                console.log("Check if category exists")
+            console.log("resposnedata",responseData)
+            if (responseData==='Item edited') {
+                console.log("edited");
+                router.push(`/admin/inventory/items`)
 
             } else {
-                console.log("Error: try adding item later")
+                console.log(`Error: try editing later`)
             }
-
-
         } catch (error) {
-            console.log(`Error:${error}`)
-
+            console.error('Error editing item:', error);
         }
 
     }
-
     return (
         <div>
-            <h1>Add Item</h1>
-            <form onSubmit={addItem}>
+            <h1>Edit Item</h1>
+            <form onSubmit={onEdit}>
                 <label>Name</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
@@ -71,7 +62,7 @@ export default function AddItemPage() {
                 <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
                 <label>Status</label>
                 <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} />
-                <input type="submit" value="Add Item" />
+                <input type="submit" value="Update Item" />
             </form>
         </div>
     )
