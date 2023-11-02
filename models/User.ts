@@ -14,11 +14,27 @@ const UserSchema = new Schema({
     },
     password:{
         type:String,
+        required:true
     },
     role:{
         type:String,
         default:'user',
         required:true
+    },
+    phone:{
+        type:Number,
+        required:true
+    },
+    userStatus:{
+        types:String,
+
+    },
+    profileImage:{
+        type:String,
+    },
+    address:{
+    type:String,
+    required:true
     }
 },{
     timestamps:true

@@ -10,10 +10,10 @@ export async function DELETE(request: Request) {
         const { url } = request;
         console.log("url", url)
 
-        const itemId = url?.split("/").pop();
-        console.log("itemId", itemId)
+        const userId = url?.split("/").pop();
+        console.log("userId", userId)
 
-        const item = await Item.deleteOne({ _id: itemId });
+        const item = await Item.deleteOne({ _id: userId });
         if (item === null) {
             return NextResponse.json({ message: "Item does not exist" });
         }
