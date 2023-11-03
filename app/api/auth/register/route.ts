@@ -2,6 +2,14 @@ import User from "@/models/User";
 import connectMongo from "@/utils/connectMongo";
 import {  NextResponse } from "next/server";
 
+export interface UserInterface{
+name:string,
+email:string,
+phone:number,
+role:string,
+address:string,
+password:string
+}
 export async function POST(request:Request) {
   connectMongo();
   const { name, email,role,phone, address,password } = await request.json();
@@ -12,7 +20,7 @@ export async function POST(request:Request) {
     if (userExists){
       return NextResponse.json("User already exists")
     }
-    const user = await User.create({
+    const user:UserInterface = await User.create({
       name,
       email,
       phone,
@@ -29,10 +37,9 @@ export async function POST(request:Request) {
     }
 
 
-    await user.save();
     console.log("user added");
     return NextResponse.json(user);
-  } catch (error) {
+  } catch (error:any) {
     console.log("post register error", error);
     if (error.code === 11000) {
       // Duplicate key error

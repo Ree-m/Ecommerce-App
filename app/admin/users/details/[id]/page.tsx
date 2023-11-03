@@ -1,6 +1,6 @@
 async function fetchUser(id:string) {
     console.log("id",id)
-    const response = await fetch(`http://localhost:3000/api/auth/${id}`)
+    const response = await fetch(`http://localhost:3000/api/auth/user/${id}`)
     const data = await response.json()
     console.log("users data", data)
     return data

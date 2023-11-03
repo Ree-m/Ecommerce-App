@@ -18,16 +18,15 @@ export default async function MenuSideBar() {
     console.log("categories inisde", categories)
 
     return (
-        <div>
-            sidebar
             <ul>
-                {categories && categories.map((category:CategoryInterface, index:number) => (
-                    <Link href={`/menu/${category.name}`} key={index}>{category.name}</Link>
+                {categories && categories.map((category: CategoryInterface, index: number) => (
+                    <li>
+                        <Link href={`/menu/${category.name}`} key={index}>{category.name}</Link>
+                    </li>
                 ))}
             </ul>
 
 
-        </div>
     )
 }
 

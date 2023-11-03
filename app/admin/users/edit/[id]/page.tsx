@@ -15,7 +15,7 @@ export default function EditPage({ params }: { params: { id: string } }) {
     async function onEdit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/${userId}`, {
+            const response = await fetch(`http://localhost:3000/api/auth/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json"

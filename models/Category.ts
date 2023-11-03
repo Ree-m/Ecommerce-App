@@ -4,8 +4,7 @@ const CategorySchema = new Schema({
    
     name: {
         type: String,
-        required: true,
-        unique:true
+        // required: true,
     },
     parentCategory: {
         type: mongoose.Types.ObjectId,
@@ -15,16 +14,16 @@ const CategorySchema = new Schema({
 
     icon: {
         type: String,
-        required: true
+        // required: true
     },
     position:{
         type:Number,
-        required:true,
+        // required:true,
         unique:true
     },
     status: {
         type: String,
-        required: true
+        // required: true
     }
 }, {
     timestamps: true
