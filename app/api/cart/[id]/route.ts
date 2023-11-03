@@ -6,7 +6,7 @@ import User from "@/models/User";
 import { UserInterface } from "../../auth/register/route";
 connectMongo()
 
-interface Cart {
+export interface Cart {
     save(): unknown;
     userId: object,
     items: CartItemInterface[]

@@ -6,7 +6,7 @@ const connectMongo = () => {
   try {
     mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB Connected`);
-  } catch (error) {
+  } catch (error:any) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
   }
