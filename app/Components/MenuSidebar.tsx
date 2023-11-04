@@ -20,9 +20,9 @@ export default async function MenuSideBar() {
     return (
             <ul>
                 {categories && categories.map((category: CategoryInterface, index: number) => (
-                    <li>
+                    <div key={index}>
                         <Link href={`/menu/${category.name}`} key={index}>{category.name}</Link>
-                    </li>
+                    </div>
                 ))}
             </ul>
 

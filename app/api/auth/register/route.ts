@@ -1,5 +1,6 @@
 import User from "@/models/User";
 import connectMongo from "@/utils/connectMongo";
+import Error from "next/error";
 import {  NextResponse } from "next/server";
 
 export interface UserInterface{

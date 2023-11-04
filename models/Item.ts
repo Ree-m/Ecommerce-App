@@ -7,7 +7,7 @@ const ItemSchema = new Schema({
         required: true,
     },
     parentCategory: {
-        type:String,
+        type: mongoose.Types.ObjectId,
         ref:'Category',
         // default:'null'
     },
@@ -15,7 +15,7 @@ const ItemSchema = new Schema({
     position: {
         type: Number,
         required: true,
-        unique:true
+        // unique:true
 
     },
     price: {

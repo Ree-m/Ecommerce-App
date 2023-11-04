@@ -3,7 +3,7 @@
 // import { Inter } from 'next/font/google'
 import { SessionProvider } from "next-auth/react";
 import Header from "./Components/Header";
-
+import CartProvider from "./context/CartContext";
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -20,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
+        <CartProvider>
           <body>
-            <Header/>
+            <Header />
             {children}
-            </body>
-
+          </body>
+        </CartProvider>
+        
       </SessionProvider>
     </html>
   )

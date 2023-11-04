@@ -16,11 +16,11 @@ export interface CartContextInterface {
 // Define your initial state separately
 const initialState: CartContextInterface = {
   cart: {
-    userId:{},
-    items:[]
-    
+    userId: {},
+    items: []
+
   },
-  setCart: () => {},
+  setCart: () => { },
 };
 
 export const CartContext = createContext(initialState);
@@ -36,22 +36,29 @@ export default function CartProvider({ children }: CartProviderProps) {
     items: [],
   });
   const { data } = useSession();
-  const userId = data?.user?.id;
+  const userId: string = data?.user?.id;
+
 
   useEffect(() => {
-  async function fetchCartOfAUser() {
-    try {
-      const response = await fetch(`/api/cart/${userId}`);
-      const data = await response.json();
-      console.log("data",data)
-      setCart(data);
-    } catch (error) {
-      console.log("Error fetching bookmark data:", error);
-    }
-  }
+    async function fetchCartOfAUser() {
+      try {
+        if (userId) {
+          const response = await fetch(`http://localhost:3000/api/cart/${userId}`, {
+            credentials: 'include'
+          });
+          console.log("response", response)
+          const data = await response.json();
+          console.log("data", data)
+          setCart(data);
+        }
 
-  fetchCartOfAUser();
-}, [userId]);
+      } catch (error) {
+        console.log("Error fetching bookmark data:", error);
+      }
+    }
+
+    fetchCartOfAUser();
+  }, [userId]);
 
 
 

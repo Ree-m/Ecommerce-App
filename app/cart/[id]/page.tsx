@@ -1,3 +1,5 @@
+import DeleteCartItem from "@/app/Components/Cart/DeleteCartItem"
+import { CartItemInterface } from "@/app/api/cart/[id]/route"
 async function fetchCartItemsOfAUser(userId: string) {
 
   const response = await fetch(`http://localhost:3000/api/cart/${userId}`,
@@ -7,16 +9,24 @@ async function fetchCartItemsOfAUser(userId: string) {
     }
   )
   const data = await response.json()
-  console.log("data", data)
   return data
 }
-export default async function CartPage({ params }: { params: { userId: string } }) {
-  const cartItems = await fetchCartItemsOfAUser(params.userId)
-  console.log("cartItems inside", cartItems)
-  // http://localhost:3000/api/cart/65443e134dcb1ebea85b5669
+export default async function CartPage({ params }: { params: { id: string } }) {
+  const userId = params.id
+  const cartItems = await fetchCartItemsOfAUser(userId)
+  console.log("cartItems inside", cartItems[0].items)
   return (
     <div>
       <h1>Your cart</h1>
+
+      <div>
+        {cartItems && cartItems[0].items && cartItems[0].items.map((item:CartItemInterface, index: number) => (
+          <div key={index}>
+            <p>{item.name}</p>
+            <DeleteCartItem userId={userId} itemId={item.itemId}/>
+          </div>
+        ))}
+      </div>
 
     </div>
   )

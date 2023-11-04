@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 import connectMongo from "@/utils/connectMongo";
-import Cart from "@/models/Cart";
+import { Cart } from "@/models/Cart";
 import User from "@/models/User";
 import { UserInterface } from "../../auth/register/route";
 connectMongo()
@@ -34,9 +34,17 @@ export async function GET(request: Request) {
         console.log("url", url)
 
         const userId: string | undefined = url?.split("/").pop();
-        console.log("userId", userId)
         const userIdObjectId: object = new mongoose.Types.ObjectId(userId)
-        const cartItems: CartItemInterface[] = await Cart.find({ userId: userIdObjectId })
+        console.log("userId", userId, userIdObjectId)
+        // const cartItems: CartItemInterface[] = await Cart.find({ userId: userIdObjectId })
+        console.log("heereererererererer")
+        const cartItems = await Cart.aggregate([
+            {
+                $match: {
+                    userId: userIdObjectId,
+                },
+            },
+        ])
 
         console.log(cartItems)
         return NextResponse.json(cartItems)
@@ -60,9 +68,9 @@ export async function POST(request: Request) {
         }
 
         const { name, itemId, price, quantity, image }: CartRequest = await request.json();
+        console.log('itemid here',name,itemId,price,quantity,image)
         const itemIdObjectId: object = new mongoose.Types.ObjectId(itemId);
 
-        console.log(name, itemId, userId, image, price, quantity, image);
 
         const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
 
@@ -72,14 +80,15 @@ export async function POST(request: Request) {
         if (!user) {
             return NextResponse.json("User not found");
         }
-
+        console.log("userIdObjectId", userIdObjectId, userId)
         // Find the user's cart or create one if it doesn't exist
         let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
-        console.log("cart here",cart)
+        console.log("cart here", cart)
 
         if (!cart) {
             // If the cart doesn't exist, create a new one
-            cart = await Cart.create({ userId, items: [] });
+            cart = await Cart.create({ userId:userIdObjectId, items: [] });
+
         }
 
         // Check if the product is already in the cart
@@ -112,6 +121,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json("Cart Item added");
     } catch (error) {
+        console.log(error);
         return NextResponse.json(`Error: ${error}`);
     }
 }
@@ -126,14 +136,17 @@ export async function DELETE(request: Request) {
         console.log("url", url)
 
         const userId: string | undefined = url?.split("/").pop();
-        console.log("userId", userId)
+        console.log("userId delete", userId)
         const { itemId } = await request.json();
-        console.log(itemId)
+        console.log("itemId delete",itemId)
 
-        console.log(userId, "checking for delete cart", itemId);
 
         // find cart of current user
-        const cart = await Cart.findOne({ userId });
+        const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
+
+        console.log(userId,userIdObjectId ,"checking for delete cart", itemId);
+
+        let cart: Cart |null = await Cart.findOne({ userId: userIdObjectId });
 
 
         if (!cart) {
@@ -152,6 +165,7 @@ export async function DELETE(request: Request) {
         await cart.save();
         return NextResponse.json("Item removed from cart");
     } catch (error) {
+        console.log(`Delete error:${error}`)
         return NextResponse.json(`Error:${error}`)
     }
 }

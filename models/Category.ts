@@ -9,7 +9,7 @@ const CategorySchema = new Schema({
     parentCategory: {
         type: mongoose.Types.ObjectId,
         ref: 'Category',
-        default:'null'
+        default:null
     },
 
     icon: {
@@ -19,7 +19,7 @@ const CategorySchema = new Schema({
     position:{
         type:Number,
         // required:true,
-        unique:true
+        // unique:true
     },
     status: {
         type: String,

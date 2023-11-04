@@ -2,12 +2,17 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 export default function Header() {
     const { data, status } = useSession();
     const username = data?.user?.name;
     const userId=data?.user?.id;
     const router = useRouter();
+    const { cart, setCart } = useContext(CartContext)
+
+    console.log("header,cart",cart)
+    
     if (status === 'authenticated' && username) {
         return (
             <div>
