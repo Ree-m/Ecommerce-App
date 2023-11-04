@@ -1,5 +1,7 @@
 import DeleteCartItem from "@/app/Components/Cart/DeleteCartItem"
-import { CartItemInterface } from "@/app/api/cart/[id]/route"
+import { CartItemInterface } from "@/app/api/cart/[id]/route";
+import UpdateCartItem from "@/app/Components/Cart/UpdateCartItem";
+
 async function fetchCartItemsOfAUser(userId: string) {
 
   const response = await fetch(`http://localhost:3000/api/cart/${userId}`,
@@ -23,6 +25,9 @@ export default async function CartPage({ params }: { params: { id: string } }) {
         {cartItems && cartItems[0].items && cartItems[0].items.map((item:CartItemInterface, index: number) => (
           <div key={index}>
             <p>{item.name}</p>
+            <UpdateCartItem userId={userId} itemId={item.itemId} quantity={1} sign={"+"}/>
+            <p>{item.quantity}</p>
+            <UpdateCartItem userId={userId} itemId={item.itemId} quantity={-1} sign={"-"}/>
             <DeleteCartItem userId={userId} itemId={item.itemId}/>
           </div>
         ))}

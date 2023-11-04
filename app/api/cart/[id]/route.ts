@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import connectMongo from "@/utils/connectMongo";
 import { Cart } from "@/models/Cart";
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         }
 
         const { name, itemId, price, quantity, image }: CartRequest = await request.json();
-        console.log('itemid here',name,itemId,price,quantity,image)
+        console.log('itemid here', name, itemId, price, quantity, image)
         const itemIdObjectId: object = new mongoose.Types.ObjectId(itemId);
 
 
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
 
         if (!cart) {
             // If the cart doesn't exist, create a new one
-            cart = await Cart.create({ userId:userIdObjectId, items: [] });
+            cart = await Cart.create({ userId: userIdObjectId, items: [] });
 
         }
 
@@ -127,9 +127,9 @@ export async function POST(request: Request) {
 }
 
 
-// delete item from cart
 
-export async function DELETE(request: Request) {
+// update quantites of cart item
+export async function PUT(request: Request) {
     try {
 
         const { url } = request;
@@ -137,35 +137,73 @@ export async function DELETE(request: Request) {
 
         const userId: string | undefined = url?.split("/").pop();
         console.log("userId delete", userId)
-        const { itemId } = await request.json();
-        console.log("itemId delete",itemId)
+        const { itemId, quantity }: { itemId: string, quantity: number } = await request.json();
+        console.log("itemId and newQuantity", itemId, quantity)
 
 
         // find cart of current user
         const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
+        const itemIdObjectId: object = new mongoose.Types.ObjectId(itemId);
 
-        console.log(userId,userIdObjectId ,"checking for delete cart", itemId);
+        console.log(userId, userIdObjectId, "checking for delete cart", itemId, itemIdObjectId);
 
-        let cart: Cart |null = await Cart.findOne({ userId: userIdObjectId });
-
-
-        if (!cart) {
-            return NextResponse.json("Cart not found");
-        }
-        // find the product to be deleted
-        const itemIndex = cart.items.findIndex(
-            (item: CartItemInterface) => item.itemId.toString() === itemId
+        let cart: Cart | null = await Cart.findOneAndUpdate(
+            { userId: userIdObjectId, "items.itemId": itemIdObjectId },
+            // { $set: { "items.quantity": newQuantity } },
+            {$inc: {"items.$.quantity": quantity}}
         );
 
-        if (itemIndex === -1) {
-            return NextResponse.json("Item not found in cart");
-        }
+        console.log("updated cart", cart)
 
-        cart.items.splice(itemIndex, 1);
-        await cart.save();
-        return NextResponse.json("Item removed from cart");
+        return NextResponse.json("Cart item updated")
+
+
     } catch (error) {
-        console.log(`Delete error:${error}`)
+        console.log(`Update error:${error}`)
         return NextResponse.json(`Error:${error}`)
     }
+
 }
+
+    // delete item from cart
+
+    export async function DELETE(request: Request) {
+        try {
+
+            const { url } = request;
+            console.log("url", url)
+
+            const userId: string | undefined = url?.split("/").pop();
+            console.log("userId delete", userId)
+            const { itemId } = await request.json();
+            console.log("itemId delete", itemId)
+
+
+            // find cart of current user
+            const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
+
+            console.log(userId, userIdObjectId, "checking for delete cart", itemId);
+
+            let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
+
+
+            if (!cart) {
+                return NextResponse.json("Cart not found");
+            }
+            // find the product to be deleted
+            const itemIndex = cart.items.findIndex(
+                (item: CartItemInterface) => item.itemId.toString() === itemId
+            );
+
+            if (itemIndex === -1) {
+                return NextResponse.json("Item not found in cart");
+            }
+
+            cart.items.splice(itemIndex, 1);
+            await cart.save();
+            return NextResponse.json("Item removed from cart");
+        } catch (error) {
+            console.log(`Delete error:${error}`)
+            return NextResponse.json(`Error:${error}`)
+        }
+    }
