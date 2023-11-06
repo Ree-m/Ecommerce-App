@@ -4,7 +4,8 @@
 import { SessionProvider } from "next-auth/react";
 import Header from "./Components/Header";
 import CartProvider from "./context/CartContext";
-
+import CheckoutDataProvider from "./context/CheckoutDataContext";
+import UserProvider from "./context/UserContext";
 // const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata: Metadata = {
@@ -20,13 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <CartProvider>
-          <body>
-            <Header />
-            {children}
-          </body>
-        </CartProvider>
-        
+        <UserProvider>
+          <CartProvider>
+            <CheckoutDataProvider>
+              <body>
+                <Header />
+                {children}
+              </body>
+            </CheckoutDataProvider>
+          </CartProvider>
+        </UserProvider>
       </SessionProvider>
     </html>
   )

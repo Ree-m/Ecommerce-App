@@ -4,12 +4,12 @@ import Error from "next/error";
 import {  NextResponse } from "next/server";
 
 export interface UserInterface{
+  _id:string,
 name:string,
 email:string,
 phone:number,
 role:string,
 address:string,
-password:string
 }
 export async function POST(request:Request) {
   connectMongo();

@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction, createContext, ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { CartItemInterface } from "../api/cart/[id]/route";
-
+import { useRouter } from "next/navigation";
 export interface Cart {
   userId: object,
   items: CartItemInterface[]
@@ -11,6 +11,9 @@ export interface Cart {
 export interface CartContextInterface {
   cart: Cart;
   setCart: Dispatch<SetStateAction<Cart>>;
+  cartLength: number;
+  setCartLength: Dispatch<SetStateAction<number>>;
+
 }
 
 // Define your initial state separately
@@ -21,6 +24,8 @@ const initialState: CartContextInterface = {
 
   },
   setCart: () => { },
+  cartLength:0,
+  setCartLength:()=>{}
 };
 
 export const CartContext = createContext(initialState);
@@ -35,9 +40,11 @@ export default function CartProvider({ children }: CartProviderProps) {
     userId: {},
     items: [],
   });
+  const [cartLength,setCartLength]=useState<number>(0)
+
   const { data } = useSession();
   const userId: string = data?.user?.id;
-
+  const router = useRouter()
 
   useEffect(() => {
     async function fetchCartOfAUser() {
@@ -48,8 +55,11 @@ export default function CartProvider({ children }: CartProviderProps) {
           });
           console.log("response", response)
           const data = await response.json();
+
           console.log("data", data)
           setCart(data);
+          router.refresh()
+
         }
 
       } catch (error) {
@@ -63,7 +73,7 @@ export default function CartProvider({ children }: CartProviderProps) {
 
 
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
+    <CartContext.Provider value={{ cart, setCart,cartLength,setCartLength }}>
       {children}
     </CartContext.Provider>
   );

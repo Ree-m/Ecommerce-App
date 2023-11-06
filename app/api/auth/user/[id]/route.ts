@@ -66,7 +66,7 @@ export async function GET(request:Request) {
         const userId = url?.split("/").pop();
         console.log("userId", userId)
 
-        const user = await User.find({_id:userId})
+        const user = await User.find({_id:userId}).select('-password')
         console.log(user)
         return NextResponse.json(user)
     } catch (error) {

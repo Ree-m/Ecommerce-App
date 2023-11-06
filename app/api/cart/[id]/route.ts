@@ -36,8 +36,6 @@ export async function GET(request: Request) {
         const userId: string | undefined = url?.split("/").pop();
         const userIdObjectId: object = new mongoose.Types.ObjectId(userId)
         console.log("userId", userId, userIdObjectId)
-        // const cartItems: CartItemInterface[] = await Cart.find({ userId: userIdObjectId })
-        console.log("heereererererererer")
         const cartItems = await Cart.aggregate([
             {
                 $match: {
@@ -119,7 +117,7 @@ export async function POST(request: Request) {
         // Save the cart to the database
         await cart.save();
 
-        return NextResponse.json("Cart Item added");
+        return NextResponse.json({ cart });
     } catch (error) {
         console.log(error);
         return NextResponse.json(`Error: ${error}`);
@@ -147,15 +145,41 @@ export async function PUT(request: Request) {
 
         console.log(userId, userIdObjectId, "checking for delete cart", itemId, itemIdObjectId);
 
-        let cart: Cart | null = await Cart.findOneAndUpdate(
-            { userId: userIdObjectId, "items.itemId": itemIdObjectId },
-            // { $set: { "items.quantity": newQuantity } },
-            {$inc: {"items.$.quantity": quantity}}
+
+        // Fetch a users cart 
+        const cart: Cart | null = await Cart.findOne(
+            { userId: userIdObjectId, "items.itemId": itemIdObjectId }
         );
 
         console.log("updated cart", cart)
 
-        return NextResponse.json("Cart item updated")
+        if (cart) {
+            // Check if the current quantity is 1 before updating
+            const currentQuantity = cart.items.find((item: CartItemInterface) =>
+                (item.itemId.toString() === itemId)
+            )?.quantity;
+            console.log("currentQunaitty", currentQuantity)
+
+            if (currentQuantity === 1) {
+                console.log("Quantity is already 1, no decrease needed.");
+                return NextResponse.json("Cart quantity is 1, no decraese needed")
+
+            } else {
+                // Update the cart item quantity
+                await Cart.findOneAndUpdate(
+                    { userId: userIdObjectId, "items.itemId": itemIdObjectId },
+                    { $inc: { "items.$.quantity": quantity } }
+                );
+                console.log("Cart item updated");
+                return NextResponse.json("Cart item updated")
+
+            }
+        } else {
+            console.log("Cart item not found for the given user and item.");
+            return NextResponse.json("Cart item not found for the given user and item.")
+
+        }
+
 
 
     } catch (error) {
@@ -165,45 +189,96 @@ export async function PUT(request: Request) {
 
 }
 
-    // delete item from cart
+// // update quantities of cart item
+// export async function PUT(request: Request) {
+//     try {
+//         const { url } = request;
+//         console.log("url", url);
 
-    export async function DELETE(request: Request) {
-        try {
+//         const userId: string | undefined = url?.split("/").pop();
+//         console.log("userId delete", userId);
+//         const { itemId, quantity }: { itemId: string, quantity: number } = await request.json();
+//         console.log("itemId and newQuantity", itemId, quantity);
 
-            const { url } = request;
-            console.log("url", url)
+//         // find cart of the current user
+//         const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
+//         const itemIdObjectId: object = new mongoose.Types.ObjectId(itemId);
 
-            const userId: string | undefined = url?.split("/").pop();
-            console.log("userId delete", userId)
-            const { itemId } = await request.json();
-            console.log("itemId delete", itemId)
+//         console.log(userId, userIdObjectId, "checking for delete cart", itemId, itemIdObjectId);
+
+//         // Fetch the current cart item
+//         const cartItem: Cart | null = await Cart.findOne(
+//             { userId: userIdObjectId, "items.itemId": itemIdObjectId }
+//         );
+
+//         if (cartItem) {
+//             // Check if the current quantity is 1 before updating
+//             const currentQuantity = cartItem.items.find((item) =>
+//                 (item.itemId as mongoose.Types.ObjectId).equals(itemIdObjectId)
+//             )?.quantity;
 
 
-            // find cart of current user
-            const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
+//             if (currentQuantity === 1) {
+//                 console.log("Quantity is already 1, no decrease needed.");
+//             } else {
+//                 // Update the cart item quantity
+//                 await Cart.findOneAndUpdate(
+//                     { userId: userIdObjectId, "items.itemId": itemIdObjectId },
+//                     { $inc: { "items.$.quantity": quantity } }
+//                 );
+//                 console.log("Cart item updated");
+//             }
+//         } else {
+//             console.log("Cart item not found for the given user and item.");
+//         }
 
-            console.log(userId, userIdObjectId, "checking for delete cart", itemId);
+//         return NextResponse.json("Cart item updated");
+//     } catch (error) {
+//         console.log(`Update error: ${error}`);
+//         return NextResponse.json(`Error: ${error}`);
+//     }
+// }
 
-            let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
+
+// delete item from cart
+
+export async function DELETE(request: Request) {
+    try {
+
+        const { url } = request;
+        console.log("url", url)
+
+        const userId: string | undefined = url?.split("/").pop();
+        console.log("userId delete", userId)
+        const { itemId } = await request.json();
+        console.log("itemId delete", itemId)
 
 
-            if (!cart) {
-                return NextResponse.json("Cart not found");
-            }
-            // find the product to be deleted
-            const itemIndex = cart.items.findIndex(
-                (item: CartItemInterface) => item.itemId.toString() === itemId
-            );
+        // find cart of current user
+        const userIdObjectId: object = new mongoose.Types.ObjectId(userId);
 
-            if (itemIndex === -1) {
-                return NextResponse.json("Item not found in cart");
-            }
+        console.log(userId, userIdObjectId, "checking for delete cart", itemId);
 
-            cart.items.splice(itemIndex, 1);
-            await cart.save();
-            return NextResponse.json("Item removed from cart");
-        } catch (error) {
-            console.log(`Delete error:${error}`)
-            return NextResponse.json(`Error:${error}`)
+        let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
+
+
+        if (!cart) {
+            return NextResponse.json("Cart not found");
         }
+        // find the product to be deleted
+        const itemIndex = cart.items.findIndex(
+            (item: CartItemInterface) => item.itemId.toString() === itemId
+        );
+
+        if (itemIndex === -1) {
+            return NextResponse.json("Item not found in cart");
+        }
+
+        cart.items.splice(itemIndex, 1);
+        await cart.save();
+        return NextResponse.json("Item removed from cart");
+    } catch (error) {
+        console.log(`Delete error:${error}`)
+        return NextResponse.json(`Error:${error}`)
     }
+}
