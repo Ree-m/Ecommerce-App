@@ -103,7 +103,17 @@ export default function PlaceOrderPanel({ totalPrice, cartItems }: { totalPrice:
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId: userData[0]._id }),
+                body: JSON.stringify({
+                    userId: userData[0]._id,
+                    name,
+                    address,
+                    email,
+                    phone,
+                    status: "Pending",
+                    deliveryTime: deliveryTime,
+                    totalPrice: totalPrice - discount,
+                    message: message
+                }),
             });
 
             const { sessionId } = await checkoutResponse.json();
@@ -112,34 +122,34 @@ export default function PlaceOrderPanel({ totalPrice, cartItems }: { totalPrice:
             if (stripeError) {
                 console.error("Stripe erorr", stripeError);
             }
-            else{
+            else {
                 console.log("Order data:", {
-                   
+
                 });
 
 
-            // const response = await fetch(`http://localhost:3000/api/order`, {
-            //     method: 'POST',
-            //     body: JSON.stringify({
-            //         name,
-            //         address,
-            //         email,
-            //         phone,
-            //         status: "pending",
-            //         deliveryTime: deliveryTime,
-            //         totalPrice: totalPrice - discount,
-            //         items: cartItems,
-            //         message: message
-            //     }),
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     credentials: "include",
-            // })
-            // const responseData = await response.json()
-            // console.log("responseData order", responseData)
-            // console.log("order added")
-        }
+                // const response = await fetch(`http://localhost:3000/api/order`, {
+                //     method: 'POST',
+                //     body: JSON.stringify({
+                //         name,
+                //         address,
+                //         email,
+                //         phone,
+                //         status: "pending",
+                //         deliveryTime: deliveryTime,
+                //         totalPrice: totalPrice - discount,
+                //         items: cartItems,
+                //         message: message
+                //     }),
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     credentials: "include",
+                // })
+                // const responseData = await response.json()
+                // console.log("responseData order", responseData)
+                // console.log("order added")
+            }
         } catch (error) {
             console.error(error);
         }

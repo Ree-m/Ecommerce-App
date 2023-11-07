@@ -8,7 +8,7 @@ import { CartInterface } from "../cart/[id]/route";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const headersList = headers();
-    const { userId } = await req.json();
+    const { userId, message, email, address,deliveryTime,phone,totalPrice} = await req.json();
 
     const userIdObjectId: object = new mongoose.Types.ObjectId(userId)
     console.log("userId", userId, userIdObjectId)
@@ -22,11 +22,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.log("line items", cart[0].items)
     const customer = await stripe.customers.create({
         metadata: {
-            userId: userId,
-            cart: JSON.stringify(cart[0].items)
+            userId,
+            cart: JSON.stringify(cart[0].items),
+            message,
+            address,
+            phone,
+            email,
+            deliveryTime,
+            totalPrice
+
         }
     })
-    console.log("customer",customer)
+    console.log("customer", customer)
     const lineItems = cart[0].items.map((item: CartItemInterface) => {
         console.log("line item details", item.name, item.quantity, item.price)
 
@@ -36,7 +43,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 product_data: {
                     name: item.name,
                 },
-                unit_amount: item.price,
+                unit_amount: item.price*100,
             },
             quantity: item.quantity,
         };
@@ -44,7 +51,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     try {
         const session = await stripe.checkout.sessions.create({
-            customer:customer.id,
+            customer: customer.id,
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
