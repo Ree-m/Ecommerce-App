@@ -21,7 +21,7 @@ export async function POST(request:Request) {
     if (userExists){
       return NextResponse.json("User already exists")
     }
-    const user:UserInterface = await User.create({
+    const user:UserInterface[] = await User.create({
       name,
       email,
       phone,
@@ -34,7 +34,7 @@ export async function POST(request:Request) {
     const isAdminEmail = email === 'admin@admin.com';
 
     if (isAdminEmail) {
-      user.role = 'admin';
+      user[0].role = 'admin';
     }
 
 

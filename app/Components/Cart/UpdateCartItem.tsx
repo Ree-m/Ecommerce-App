@@ -6,7 +6,7 @@ export default function UpdateCartItem({userId,itemId,quantity,sign}:{userId:str
 
     async function onUpdate() {
         try {
-            console.log("delete cart item userId",userId);
+            console.log("update cart item userId",userId);
            const response =  await fetch(`http://localhost:3000/api/cart/${userId}`, {
               method: 'PUT',
               body:JSON.stringify({
@@ -20,9 +20,8 @@ export default function UpdateCartItem({userId,itemId,quantity,sign}:{userId:str
 
                 console.log("Cart updated");
                 router.refresh()
-            }else{
-                console.log(`Error: try updating later`)
             }
+
           } catch (error) {
             console.error('Error updating item:', error);
           }

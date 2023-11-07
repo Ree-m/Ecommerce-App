@@ -33,7 +33,7 @@ export async function PUT(request: Request) {
         const userId = url?.split("/").pop();
         console.log("userId", userId)
         const { name, email, address, phone } = await request.json();
-        console.log("name, category,etc", name, email, address, phone)
+        console.log(name, email, address, phone)
 
         // Retrieve the existing item from the database
         const existingUser = await User.findOne({ _id: userId });

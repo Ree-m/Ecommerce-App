@@ -3,36 +3,36 @@ import mongoose, { Schema, model, models } from "mongoose";
 const OrderSchema = new Schema({
 name:{
     type:String,
-    required:true
+    // required:true
 },
 email:{
     type:String,
-    required:true
+    // required:true
 },
 phone:{
     type:Number,
-    required:true
+    // required:true
 },
 address:{
     type:String,
-    required:true
+    // required:true
 },
 items:{
     type:Array,
-    required:true
+    // required:true
 
 },
 totalPrice:{
     type:Number,
-    required:true
+    // required:true
 },
 deliveryTime:{
     type:String,
-    required:true
+    // required:true
 },
 status:{
     type:String,
-    required:true,
+    // required:true,
     default:"Pending"
 },
 message:{

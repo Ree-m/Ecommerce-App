@@ -21,8 +21,8 @@ export default async function MenuPage({ params }: { params: { name: string } })
     return (
         <div>
             Menu Page
-            {items.length>0 && items.map((item:any)=>(
-                <Item item={item} categoryName={categoryName}/>
+            {items.length>0 && items.map((item:any,index:number)=>(
+                <Item key={index} item={item} categoryName={categoryName}/>
             ))}
  
         </div>

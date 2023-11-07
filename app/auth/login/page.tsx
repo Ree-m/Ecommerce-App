@@ -77,7 +77,7 @@ const LoginPage = () => {
 
         </div>
       </form>
-      <button onClick={()=>signIn('google')}>Sign in with google</button>
+      <button onClick={()=>signIn('google')}>Sign in with Google</button>
 
     </div>
   );

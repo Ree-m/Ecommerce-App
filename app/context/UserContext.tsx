@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction, createContext, ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { CartItemInterface } from "../api/cart/[id]/route";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { UserInterface } from "../api/auth/register/route";
 import UserDetailsPage from "../admin/users/details/[id]/page";
 
@@ -19,7 +19,7 @@ const initialState: UserContextInterface = {
         phone: 0,
         email:"",
         role:"",
-        _id:{}
+        _id:""
     },
     setUserData: () => { },
 
@@ -39,12 +39,12 @@ export default function UserProvider({ children }: UserProviderProps) {
         phone:0,
         email:"",
         role:"",
-        _id:{}
+        _id:""
     });
 
     const { data } = useSession();
     const userId: string = data?.user?.id;
-    const router = useRouter()
+    // const router = useRouter()
 
     useEffect(() => {
         async function fetchUserData() {
@@ -54,11 +54,11 @@ export default function UserProvider({ children }: UserProviderProps) {
                         credentials: 'include'
                     });
                     console.log("response", response)
-                    const data = await response.json();
+                    const data:UserInterface[] = await response.json();
 
                     console.log("data", data)
                     setUserData(data);
-                    router.refresh()
+                    // router.refresh()
 
                 }
 

@@ -6,7 +6,7 @@ import User from "@/models/User";
 import { UserInterface } from "../../auth/register/route";
 connectMongo()
 
-export interface Cart {
+export interface CartInterface {
     save(): unknown;
     userId: object,
     items: CartItemInterface[]
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
         const userId: string | undefined = url?.split("/").pop();
         const userIdObjectId: object = new mongoose.Types.ObjectId(userId)
         console.log("userId", userId, userIdObjectId)
-        const cartItems = await Cart.aggregate([
+        const cart:CartInterface[] = await Cart.aggregate([
             {
                 $match: {
                     userId: userIdObjectId,
@@ -44,8 +44,8 @@ export async function GET(request: Request) {
             },
         ])
 
-        console.log(cartItems)
-        return NextResponse.json(cartItems)
+        console.log(cart)
+        return NextResponse.json(cart)
     } catch (error) {
         return NextResponse.json(`Error:${error}`)
     }
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
         }
         console.log("userIdObjectId", userIdObjectId, userId)
         // Find the user's cart or create one if it doesn't exist
-        let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
+        let cart: CartInterface | null = await Cart.findOne({ userId: userIdObjectId });
         console.log("cart here", cart)
 
         if (!cart) {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         }
 
         // Check if the product is already in the cart
-        const existingItem = cart.items.find((item: CartItemInterface) => {
+        const existingItem = cart && cart.items.find((item: CartItemInterface) => {
             console.log("itemId", item.itemId, "and itemIdObjectId", itemIdObjectId);
             return item.itemId.toString() === itemId;
         });
@@ -147,7 +147,7 @@ export async function PUT(request: Request) {
 
 
         // Fetch a users cart 
-        const cart: Cart | null = await Cart.findOne(
+        const cart: CartInterface | null = await Cart.findOne(
             { userId: userIdObjectId, "items.itemId": itemIdObjectId }
         );
 
@@ -160,9 +160,9 @@ export async function PUT(request: Request) {
             )?.quantity;
             console.log("currentQunaitty", currentQuantity)
 
-            if (currentQuantity === 1) {
+            if (currentQuantity === 1&& quantity===-1) {
                 console.log("Quantity is already 1, no decrease needed.");
-                return NextResponse.json("Cart quantity is 1, no decraese needed")
+                return NextResponse.json("Cart quantity is 1, no decrease needed")
 
             } else {
                 // Update the cart item quantity
@@ -259,7 +259,7 @@ export async function DELETE(request: Request) {
 
         console.log(userId, userIdObjectId, "checking for delete cart", itemId);
 
-        let cart: Cart | null = await Cart.findOne({ userId: userIdObjectId });
+        let cart: CartInterface | null = await Cart.findOne({ userId: userIdObjectId });
 
 
         if (!cart) {
