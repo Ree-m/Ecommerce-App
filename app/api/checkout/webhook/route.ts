@@ -54,8 +54,8 @@ export async function POST(req: Request) {
         address: user[0].address,
         phone: user[0].phone,
         email: user[0].email,
-
       })
+      console.log("webhook called")
       await order.save()
     }
 

@@ -1,40 +1,43 @@
 import { NextResponse, NextRequest } from "next/server";
-import Item from "@/models/Item";
-import Category from "@/models/Category";
+import Review from "@/models/Review";
 import connectMongo from "@/utils/connectMongo";
-
+export interface ReviewInterface {
+    save(): unknown,
+    name: string,
+    phone: number,
+    message: number,
+    restaurant: string
+}
 connectMongo();
 
 export async function POST(request: Request) {
 
     try {
-        const { name, parentCategory, position, price, image, status } = await request.json();
-        console.log("name, parentCategory, position, price, image, status", name, parentCategory, position, price, image, status)
-        const category = await Category.findOne({ name: parentCategory });
+        const { message, name, phone, restaurant,rating } = await request.json();
 
-        const itemDoc = await Item.create({
-            name:name.toLowerCase(),
-            parentCategory: category ? category._id : null,
-            position,
-            price,
-            image,
-            status
+        const reviewArr: ReviewInterface[] = await Review.create({
+            name,
+            phone,
+            message,
+            restaurant,
+            rating
         })
-        console.log(itemDoc)
+        // console.log(review)
 
-        itemDoc.save()
-        console.log("Item added")
-        return NextResponse.json("Item added")
+       await reviewArr.save()
+        console.log("Review added")
+        return NextResponse.json({ message: "Review added", reviewArr })
     } catch (error) {
+        console.log("error", error)
         return NextResponse.json(`Error:${error}`)
     }
 }
 
 export async function GET() {
     try {
-        const items = await Item.find()
-        console.log(items)
-        return NextResponse.json(items)
+        const reviews: ReviewInterface[] = await Review.find()
+        console.log(reviews)
+        return NextResponse.json(reviews)
     } catch (error) {
         return NextResponse.json(`Error:${error}`)
     }

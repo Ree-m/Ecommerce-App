@@ -38,7 +38,7 @@ export default function Header() {
                 <Link href={`/`}>BarBak</Link>
                 <p>Hi, {username}</p>
                 <button onClick={() => signOut()}>signOut</button>
-                <Link href={`/cart/${userId}`}>Cart {cartLength}</Link>
+                <Link href={`/cart/${userId}`}>Cart</Link>
 
             </div>
         )

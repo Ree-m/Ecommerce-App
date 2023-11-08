@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction, createContext, ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { CartItemInterface } from "../api/cart/[id]/route";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 export interface Cart {
   userId: object,
   items: CartItemInterface[]
@@ -44,7 +44,7 @@ export default function CartProvider({ children }: CartProviderProps) {
 
   const { data } = useSession();
   const userId: string = data?.user?.id;
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     async function fetchCartOfAUser() {
@@ -58,7 +58,7 @@ export default function CartProvider({ children }: CartProviderProps) {
 
           console.log("data", data)
           setCart(data);
-          router.refresh()
+          // rouster.refresh()
 
         }
 
