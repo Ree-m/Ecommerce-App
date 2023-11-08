@@ -36,27 +36,25 @@ export async function POST(req: Request) {
       // using userId, fetch user data from database
       console.log("userId", userId, userIdObjectId)
       const user = await User.find({ _id: userIdObjectId })
-      // const user2 = await User.findOne({ _id: userIdObjectId })
-      // const user3 = await User.findOne({ _id: userId })
-      // const user4 = await User.find({ _id: userId })
-    
+
 
       console.log("1")
-      console.log("ihook user", user,user[0].address )
+      console.log("ihook user", user,  userId)
       console.log("2")
       // Access the customer ID from the webhook payload
       console.log("cutomer", customer)
       const cartItems = JSON.parse(customer.metadata.cart)
-      console.log("in webhook cartItems", cartItems)
+      console.log("in webhook cartItems", cartItems,customer.metadata.userId)
       const order = await Order.create({
-        // totalPrice: +customer.metedata.totalPrice,
+        userId: userIdObjectId,
         items: cartItems,
         message: customer.metadata.message,
         deliveryTime: customer.metadata.deliveryTime,
         name: user[0].name,
         address: user[0].address,
         phone: user[0].phone,
-        email:user[0].email
+        email: user[0].email,
+
       })
       await order.save()
     }

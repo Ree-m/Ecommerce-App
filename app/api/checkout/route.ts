@@ -19,7 +19,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             },
         },
     ])
-    console.log("line items", cart[0].items)
+    console.log("line items", cart[0].items,)
     const customer = await stripe.customers.create({
         metadata: {
             userId,

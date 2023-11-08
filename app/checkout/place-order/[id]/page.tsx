@@ -1,4 +1,5 @@
 import PlaceOrderPanel from "@/app/Components/Checkout/PlaceOrderPanel"
+import { CartItemInterface } from "@/app/api/cart/[id]/route"
 async function fetchCartItemsOfAUser(userId: string) {
 
   const response = await fetch(`http://localhost:3000/api/cart/${userId}`,
