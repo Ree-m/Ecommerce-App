@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction, createContext, ReactNode } from "react";
+import { useState, Dispatch, SetStateAction, createContext, ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { CartItemInterface } from "../api/cart/[id]/route";
 import { useRouter } from "next/navigation";

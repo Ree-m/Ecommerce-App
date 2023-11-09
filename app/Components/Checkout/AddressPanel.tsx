@@ -119,7 +119,7 @@ export default function AddressPanel({ userData, totalPrice }: { userData: UserI
 
             </div>
             <p>{totalPrice}</p>
-            <Link href={`/checkout/order-summary/${userData._id.toString()}`}>Continue</Link>
+            <Link href={`/checkout/order-summary/${userData._id}`}>Continue</Link>
         </div>
     );
 }

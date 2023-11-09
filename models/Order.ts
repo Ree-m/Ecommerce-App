@@ -4,7 +4,7 @@ const OrderSchema = new Schema({
     userId: {
         type: mongoose.Types.ObjectId,
         required: true,
-        ref:"User"
+        ref: "User"
     },
     name: {
         type: String,
@@ -37,13 +37,16 @@ const OrderSchema = new Schema({
     },
     status: {
         type: String,
-        required:true,
+        required: true,
         default: "pending"
     },
     message: {
         type: String
 
-    }
+    },
+
+},{
+    timestamps: true
 });
 
 

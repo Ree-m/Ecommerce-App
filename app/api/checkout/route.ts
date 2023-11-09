@@ -55,7 +55,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: `http://localhost:3000`,
+            success_url: `http://localhost:3000/checkout/success/${userId}`,
             cancel_url: `http://localhost:3000/cart/${userId}`,
         });
 

@@ -4,6 +4,7 @@ import User from "@/models/User";
 
 connectMongo()
 
+// delete a user
 export async function DELETE(request: Request) {
     try {
         const { url } = request;
@@ -24,7 +25,7 @@ export async function DELETE(request: Request) {
     }
 }
 
-
+// edit a profile
 export async function PUT(request: Request) {
     try {
         const { url } = request;
