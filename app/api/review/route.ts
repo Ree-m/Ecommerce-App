@@ -22,11 +22,10 @@ export async function POST(request: Request) {
             restaurant,
             rating
         })
-        // console.log(review)
 
        await reviewArr.save()
         console.log("Review added")
-        return NextResponse.json({ message: "Review added", reviewArr })
+        return NextResponse.json({ message: "Review added", review })
     } catch (error) {
         console.log("error", error)
         return NextResponse.json(`Error:${error}`)
