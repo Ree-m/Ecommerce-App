@@ -3,7 +3,6 @@ import SignOut from "@/app/Components/Profile/SignOut";
 import EditProfile from "@/app/Components/Profile/EditProfile";
 
 async function fetchAUser(userId: string) {
-  console.log("fav userId", userId)
   const response = await fetch(`http://localhost:3000/api/auth/user/${userId}`,
     {
       cache: 'no-cache',
@@ -15,7 +14,6 @@ async function fetchAUser(userId: string) {
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const userId = params.id;
   const userDataArr: UserInterface[] = await fetchAUser(userId);
-  console.log("in profile", userDataArr);
   const userData: UserInterface = userDataArr[0];
 
   return (

@@ -1,1 +1,1 @@
-declare module 'react-rating-stars-component'
+declare module '@tawk.to/tawk-messenger-react';

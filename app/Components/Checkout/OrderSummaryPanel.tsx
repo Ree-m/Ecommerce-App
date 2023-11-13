@@ -30,10 +30,10 @@ export default function OrderSummaryPanel({ totalPrice, totalItems }: { totalPri
             <div>
                 <h3>Price Details</h3>
                 <p>{`Price (${totalItems} items):${totalPrice}`}</p>
-                <p>Discount(10%):-{discount} </p>
+                {/* <p>Discount(10%):-{discount} </p> */}
 
             </div>
-            <p>Total price:{totalPrice - discount}</p>
+            <p>Total price:{totalPrice}</p>
             <Link href={`/checkout/place-order/${userData[0]._id}`}>Continue</Link>
 
         </div>

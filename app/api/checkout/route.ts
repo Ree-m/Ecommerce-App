@@ -5,10 +5,11 @@ import stripe from "@/config/stripe";
 import mongoose from "mongoose";
 import { CartItemInterface } from "../cart/[id]/route";
 import { CartInterface } from "../cart/[id]/route";
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const headersList = headers();
-    const { userId, message, email, address,deliveryTime,phone,totalPrice} = await req.json();
+    const { userId, message, email, address, deliveryTime, phone, totalPrice } = await req.json();
 
     const userIdObjectId: object = new mongoose.Types.ObjectId(userId)
     console.log("userId", userId, userIdObjectId)
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 product_data: {
                     name: item.name,
                 },
-                unit_amount: item.price*100,
+                unit_amount: item.price * 100,
             },
             quantity: item.quantity,
         };
@@ -65,3 +66,61 @@ export async function POST(req: NextRequest, res: NextResponse) {
         return NextResponse.json({ error: "Error creating checkout session" });
     }
 }
+
+
+// // generate pdf
+
+
+// async function generateReceipt(orderDetails) {
+//     // Create a new PDF document
+//     const pdfDoc = await PDFDocument.create();
+//     // Embed the Times Roman font
+//     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
+
+//     // Add a new page
+//     const page = pdfDoc.addPage([400, 400]);
+
+//     // Draw the receipt content
+//     const { width, height } = page.getSize();
+//     const fontsize = 30;
+//     page.drawText(orderDetails, {
+//         x: 50,
+//         y: height - 4 * fontsize,
+//         size: fontsize,
+//         font: timesRomanFont,
+//         color: rgb(0, 0.53, 0.71),
+//     });
+
+//     // Serialize the PDF to bytes
+//     const pdfBytes = await pdfDoc.save();
+
+//     return pdfBytes;
+// }
+
+// // fetch pdf receipt
+// export async function GET(req: NextRequest, res: NextResponse) {
+//     try {
+//         const { message, email, items, address, deliveryTime, phone, totalPrice } = await req.json();
+
+//         if (!message || !email || !items || !address || !deliveryTime || !phone || !totalPrice) {
+//             return new NextResponse('Invalid request data', { status: 400 });
+//         }
+
+
+//         const orderDetails = { message, email, items, address, deliveryTime, phone, totalPrice }
+//         console.log("orderDetails", orderDetails)
+//         const pdfBytes = await generateReceipt(orderDetails);
+//         console.log("pdfBytes", pdfBytes)
+//         try{
+//         return new NextResponse(pdfBytes, {
+//             headers: {
+//                 'Content-Type': 'application/pdf',
+//                 'Content-Disposition': 'attachment; filename="receipt.pdf"',
+//             },
+//         });
+
+//     } catch (error) {
+//         console.error(error);
+//         return NextResponse.json('Internal server error', { status: 500 })
+//     }
+// }

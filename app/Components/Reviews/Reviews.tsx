@@ -1,4 +1,4 @@
-import { ReviewInterface } from "../api/review/route"
+import { ReviewInterface } from "../../api/review/route"
 async function fetchReviews() {
 
     const response = await fetch(`http://localhost:3000/api/review`,
@@ -11,7 +11,6 @@ async function fetchReviews() {
 }
 export default async function Reviews() {
     const reviews: ReviewInterface[] = await fetchReviews()
-    console.log("review inside",reviews)
     return (
         <div>
             <h3>The reviews</h3>

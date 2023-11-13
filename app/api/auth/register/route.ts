@@ -2,6 +2,8 @@ import User from "@/models/User";
 import connectMongo from "@/utils/connectMongo";
 import Error from "next/error";
 import {  NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+
 
 export interface UserInterface{
   _id:string,
@@ -10,24 +12,29 @@ email:string,
 phone:number,
 role:string,
 address:string,
+image:string
 }
 export async function POST(request:Request) {
   connectMongo();
-  const { name, email,role,phone, address,password } = await request.json();
-  console.log("name", name, "email", email, "password", password,"address",address,"phone","phone",phone);
+  const { name, email,role,phone, image, address,password } = await request.json();
+  console.log("name", name, "email", email, "password", password,"address",address,"phone","phone",phone,"image",image);
 
   try {
-    const userExists=await User.findOne({$or:[{name,email}]})
+    const userExists=await User.findOne({$or:[{email}]})
     if (userExists){
       return NextResponse.json("User already exists")
     }
+
+    const hashedPassword = await bcrypt.hash(password, 5);
+
     const user:UserInterface[] = await User.create({
       name,
       email,
       phone,
       role,
       address,
-      password
+      image,
+      password:hashedPassword
       
     });
 

@@ -19,7 +19,6 @@ async function fetchFavoritesOfAUser(userId: string) {
 export default async function FavouritePage({ params }: { params: { id: string } }) {
   const userId = params.id
   const favourites = await fetchFavoritesOfAUser(userId)
-  console.log("favourites inside", favourites)
   return (
     <div>
       <h1>My favourites</h1>

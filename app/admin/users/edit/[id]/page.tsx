@@ -10,7 +10,6 @@ export default function EditPage({ params }: { params: { id: string } }) {
     const [address, setAddress] = useState("");
     const userId = params.id
     const router = useRouter()
-    console.log("userId", params, params.id)
 
     async function onEdit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()

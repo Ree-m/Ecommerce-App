@@ -12,6 +12,7 @@ const RegisterPage = () => {
     const [phone, setPhone] = useState<number>(0);
     const [address, setAddress] = useState("");
     const router = useRouter();
+
     const { data, status } = useSession();
     const username = data?.user?.name;
 

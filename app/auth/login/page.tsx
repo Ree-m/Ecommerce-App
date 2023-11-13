@@ -26,16 +26,16 @@ const LoginPage = () => {
         name,
       });
 
-      if (data?.error) {
-        // Handle login error
-        alert("Wrong credentials");
-      } else {
         // Login successful
       
         setName("");
         setEmail("");
         setPassword("");
         router.push("/");
+        
+      if (data?.error) {
+        // Handle login error
+        console.log("Error login",data?.error);
       }
     } catch (error) {
       console.log(error);

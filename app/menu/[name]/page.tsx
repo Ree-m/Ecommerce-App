@@ -1,7 +1,6 @@
 import Item from "@/app/Components/Item";
 
 async function fetchAllItemsOfACategory(name: string) {
-    console.log("name",name)
     const response = await fetch(`http://localhost:3000/api/items/${name}`,
         {
             cache: 'no-cache',
@@ -9,13 +8,11 @@ async function fetchAllItemsOfACategory(name: string) {
         }
     )
     const data = await response.json()
-    console.log("data", data)
     return data
 }
 export default async function MenuPage({ params }: { params: { name: string } }) {
     const categoryName = params.name;
     const items = await fetchAllItemsOfACategory(categoryName)
-    console.log("items of a category",items)
 
 
     return (

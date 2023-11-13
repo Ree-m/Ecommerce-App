@@ -17,6 +17,7 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true, 
     }),
 
     CredentialsProvider({
@@ -26,37 +27,107 @@ const handler = NextAuth({
         const { email, password, name } = credentials;
         console.log("credentials backend ", credentials);
         let user = await User.findOne({ email, name, password });
-        const userRole = credentials.role;
         if (!user) {
           throw new Error("Invalid Email or Password");
         }
-        console.log("credientials login", user, userRole);
+        console.log("credientials login", user);
 
-      return user; 
-    },
+        return user;
+      },
     }),
   ],
-callbacks: {
-  session({ session, token, user }) {
-    console.log("session  first", session, "user", user, "token", token)
-    session = {
-      ...session,
-      user: {
-        id: token.sub,
-        ...session.user,
+  callbacks: {
+    session({ session, token, user }) {
+      console.log("session  first", session, "user", user, "token", token)
+      session = {
+        ...session,
+        user: {
+          id: token.sub,
+          ...session.user,
 
-      },
-    };
-    console.log("session", session);
-    return session;
+        },
+      };
+      console.log("session", session);
+      return session;
+    },
+
+    //   async signIn({ user, account }) {
+    //     if (account.provider === "google") {
+    //       const { name, email,image } = user;
+    //       try {
+
+    //           const response = await fetch("http://localhost:3000/api/auth/register", {
+    //             method: "POST",
+    //             headers: {
+    //               "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //               name,
+    //               email,
+    //               image,
+    //               phone:0,
+    //               role:"user",
+    //               address:""
+    //             }),
+    //           });
+
+    //           if (response.ok) {
+    //             return user;
+    //           }
+    //           console.log("error here response not ok")
+
+    //       } catch (error) {
+    //         console.log(error);
+    //       }
+    //     }
+
+    //     return user;
+    //   },
+    // },
+
+
+    async signIn({ user, account }) {
+      console.log("google user", user, account)
+
+      if (account.provider === "google") {
+        console.log("google user", user, account)
+        try {
+          await connectMongo();
+
+          // check if user already exists
+          const userExists = await User.findOne({ email: user.email });
+          console.log("user exists", userExists)
+          // if not, create a new document and save user in MongoDB
+          if (!userExists) {
+            await User.create({
+              email: user.email,
+              name: user.name,
+              image: user.image,
+              address:"",
+              phone:0,
+
+            });
+          }
+
+          return true
+        } catch (error) {
+          console.log("Error checking if user exists: ", error.message);
+          return false
+        }
+      }
+    },
+
   },
-},
-adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise),
 
   pages: {
-  signIn: "/auth/login",
+    signIn: "/auth/login",
+    error: "/auth/login",
+
   },
-secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: true,
+  allowDangerousEmailAccountLinking: true
 });
 
 export { handler as GET, handler as POST };

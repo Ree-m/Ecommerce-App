@@ -2,6 +2,8 @@ import { OrderInterface } from "@/app/api/admin/orders/route";
 import { CartItemInterface } from "@/app/api/cart/[id]/route";
 import AddressPanel from "@/app/Components/Checkout/AddressPanel";
 import CancelOrder from "@/app/Components/Checkout/CancelOrder";
+import Link from "next/link";
+import DownloadReceipt from "@/app/Components/Checkout/DownloadReceipt";
 
 async function fetchUserData(userId: string) {
   const response = await fetch(`http://localhost:3000/api/auth/user/${userId}`,
@@ -28,7 +30,7 @@ export default async function CheckoutSuccess({ params }: { params: { id: string
   const userId = params.id
   const orders = await fetchLatestOrderOfAUser(userId)
   const orderId = orders[0]._id
-  console.log("orderId",orderId)
+  console.log("orderId", orderId)
   const totalPrice = orders[0].items.reduce((acc: number, item: CartItemInterface) => acc + item.price * item.quantity, 0)
   const userData = await fetchUserData(userId)
   return (
@@ -39,7 +41,7 @@ export default async function CheckoutSuccess({ params }: { params: { id: string
           <div>
             <p>{orderItem.name}</p>
 
-            <p>{orderItem.price}</p>
+            <p>{totalPrice}</p>
           </div>
 
         ))
@@ -48,8 +50,7 @@ export default async function CheckoutSuccess({ params }: { params: { id: string
       <CancelOrder orderId={orderId} />
       {/* <AddressPanel userData={userData} totalPrice={totalPrice}/> */}
 
-
-
+      <DownloadReceipt orderId={orderId} />
 
 
     </div>

@@ -27,6 +27,7 @@ export default function RootLayout({
               <body>
                 <Header />
                 {children}
+                
               </body>
             </CheckoutDataProvider>
           </CartProvider>
@@ -34,4 +35,5 @@ export default function RootLayout({
       </SessionProvider>
     </html>
   )
+
 }

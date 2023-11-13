@@ -31,7 +31,8 @@ export default async function OrderSummaryPage({ params }: { params: { id: strin
   const data = await fetchUserData(userId)
   const userData = data[0]
   const totalPrice=   cartItems&&cartItems[0].items.reduce((acc:number,item:CartItemInterface)=>acc+item.price*item.quantity,0)
-  const totalItems=   cartItems&&cartItems[0].items.length
+  // const totalItems= cartItems&&cartItems[0].items.length
+  const totalItems = cartItems && cartItems[0].items.reduce((acc: number, item: CartItemInterface) => acc + item.quantity, 0);
 
   console.log("userdata", userData)
   console.log("checkout inside", cartItems[0].items)
