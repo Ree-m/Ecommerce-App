@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useItems } from "@/app/context/ItemContext"
 export default function AddItemPage() {
-    const [name, setName] = useState<string | null>(null)
-    const [parentCategory, setParentCategory] = useState<string | null>(null)
-    const [position, setPosition] = useState<number | null>(null)
-    const [price, setPrice] = useState<number | null>(null)
-    const [image, setImage] = useState<string | null>(null)
-    const [status, setStatus] = useState<string | null>(null)
+    const [name, setName] = useState<string>("")
+    const [parentCategory, setParentCategory] = useState<string>("")
+    const [position, setPosition] = useState<number | undefined>(undefined)
+    const [price, setPrice] = useState<number | undefined>(undefined)
+    const [image, setImage] = useState<string>("")
+    const [status, setStatus] = useState<string>("")
+    const [file, setFile] = useState<File | null>(null);
+
     const router = useRouter()
 
 
@@ -20,27 +21,28 @@ export default function AddItemPage() {
             e.preventDefault();
             console.log("start adding item")
             console.log("State values: name", name, "parentCategory", parentCategory, "position", position, "price", price, "image", image, "status", status);
+            let formData = new FormData();
+            formData.append("name", name);
+            formData.append("parentCategory", parentCategory)
+            formData.append("position", position)
+            formData.append("price", price)
+            formData.append("image", file)
+            formData.append("status", status)
+
+            console.log("formdata", formData)
 
             const response = await fetch(`http://localhost:3000/api/admin/inventory/items`, {
                 method: 'POST',
-                body: JSON.stringify({
-                    name,
-                    parentCategory,
-                    position,
-                    price,
-                    image,
-                    status
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+
+                body: formData,
+
                 credentials: "include",
 
             })
             const responseData = await response.json()
             console.log(responseData)
             if (responseData === "Item added") {
-            
+
                 console.log('Item added');
                 router.refresh()
                 router.push('/admin/inventory/items');
@@ -57,6 +59,12 @@ export default function AddItemPage() {
         }
     }
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files?.[0];
+        console.log("seleceted file", selectedFile)
+        setFile(selectedFile);
+    };
+
     return (
         <div>
             <h1>Add Item</h1>
@@ -70,10 +78,11 @@ export default function AddItemPage() {
                 <input type="number" value={position} onChange={(e) => setPosition(+e.target.value)} />
                 <label>Price</label>
                 <input type="number" value={price} onChange={(e) => setPrice(+e.target.value)} />
-                <label>Image</label>
-                <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
                 <label>Status</label>
                 <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} />
+                <label>Image</label>
+                <input type="file" onChange={handleFileChange} required />
+
                 <input type="submit" value="Add Item" />
             </form>
         </div>

@@ -29,7 +29,7 @@ async function fetchLatestOrderOfAUser(userId: string) {
 export default async function CheckoutSuccess({ params }: { params: { id: string } }) {
   const userId = params.id
   const orders = await fetchLatestOrderOfAUser(userId)
-  const orderId = orders[0]._id
+  const orderId = orders[0]?._id
   console.log("orderId", orderId)
   const totalPrice = orders[0].items.reduce((acc: number, item: CartItemInterface) => acc + item.price * item.quantity, 0)
   const userData = await fetchUserData(userId)

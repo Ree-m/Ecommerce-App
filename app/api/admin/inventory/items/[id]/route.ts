@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import connectMongo from "@/utils/connectMongo";
 import Item from "@/models/Item";
 import Category from "@/models/Category";
+import fs from "fs/promises";
+import path from "path";
 
 connectMongo()
 
@@ -32,37 +34,64 @@ export async function PUT(request: Request) {
 
         const itemId = url?.split("/").pop();
         console.log("itemId", itemId)
-        const { name, parentCategory, position, price, image, status } = await request.json();
-        console.log("name, category,etc", name, parentCategory, position, price, image, status)
 
         // Retrieve the existing item from the database
+
         const existingItem = await Item.findOne({ _id: itemId });
+
+        // const { name, parentCategory, position, price, image, status } = await request.json();
+        // console.log("name, category,etc", name, parentCategory, position, price, image, status)
+
+        const formData = await request.formData();
+        const name = formData.get("name");
+        const parentCategory = formData.get("parentCategory")
+        const position = formData.get("position")
+        const price = formData.get("price")
+        const image = formData.get("image")
+        const status = formData.get("status")
+
+        console.log("name and all", name, parentCategory, position, price, image, status)
+
 
         // Check which fields are being updated and update them
         if (name) existingItem.name = name.toLowerCase();
 
-        if (parentCategory !== null) {
+        if (parentCategory !== null && parentCategory !== undefined) {
             // Set parentCategory to a valid ObjectId, ensuring it exists in the 'Category' model
-            const categoryExists = await Category.findOne({name:parentCategory});
+            const categoryExists = await Category.findOne({ name: parentCategory });
+            console.log("category exists", categoryExists);
             if (categoryExists) {
                 existingItem.parentCategory = parentCategory._id;
             } else {
                 return NextResponse.json("Error: Invalid parentCategory");
             }
-        } else {
-            existingItem.parentCategory = null;
         }
 
-        if (position !== null) existingItem.position = position;
-        if (price !== null) existingItem.price = price;
-        if (image) existingItem.image = image;
+        
+        if (position) existingItem.position = position;
+        if (price) existingItem.price = price;
         if (status) existingItem.status = status;
+
+        if (image) {
+            console.log("1")
+            const fileName = `${itemId}_${Date.now()}_${image.name}`;
+            console.log("filename", fileName)
+
+            // Move the uploaded file to the destination folder
+            const destinationPath = path.join("public/uploads", fileName);
+            console.log("destination path", destinationPath)
+
+            // Get the file buffer and write it to the destination folder
+            const fileBuffer = await image.arrayBuffer();
+            await fs.writeFile(destinationPath, new Uint8Array(fileBuffer));
+
+            existingItem.image = `${fileName}`;
+        }
 
         // Save the updated item back to the database
         const updatedItem = await existingItem.save();
 
 
-        // const updatedItem = await Item.updateOne({ _id: itemId }, { name, parentCategory, position, price, image, status });
         console.log("updatedItem", updatedItem)
         return NextResponse.json("Item edited");
     } catch (error) {
@@ -71,3 +100,4 @@ export async function PUT(request: Request) {
     }
 
 }
+

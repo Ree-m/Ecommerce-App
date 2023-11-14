@@ -32,6 +32,11 @@ const UserSchema = new Schema({
     address: {
         type: String,
 
+    },
+    loyaltyPoints: {
+        type: Number,
+        default: 0,
+        required:true
     }
 }, {
     timestamps: true

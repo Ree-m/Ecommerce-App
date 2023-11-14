@@ -36,11 +36,6 @@ export default function AddAvatar({ userId, userData }: { userId: string, userDa
             let formData = new FormData();
             formData.append("image", file);
             console.log(formData.has("image"))
-
-            console.log("formdata", formData)
-            for (const value of formData.values()) {
-                console.log("value",value);
-              }
               
 
             const response = await fetch(`http://localhost:3000/api/auth/user/avatar/${userId}`, {

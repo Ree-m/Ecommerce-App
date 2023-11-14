@@ -25,7 +25,7 @@ const RegisterPage = () => {
             e.preventDefault();
             const response = await fetch(`/api/auth/register`, {
                 method: "POST",
-                body: JSON.stringify({ name, email, password, address, phone}),
+                body: JSON.stringify({ name, email, password, address, phone,loyaltyPoints:0}),
                 headers: {
                     "Content-Type": "application/json",
                 },

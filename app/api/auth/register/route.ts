@@ -12,12 +12,13 @@ email:string,
 phone:number,
 role:string,
 address:string,
-image:string
+image:string,
+loyaltyPoints:number
 }
 export async function POST(request:Request) {
   connectMongo();
-  const { name, email,role,phone, image, address,password } = await request.json();
-  console.log("name", name, "email", email, "password", password,"address",address,"phone","phone",phone,"image",image);
+  const { name, email,role,phone, image, address,loyaltyPoints,password } = await request.json();
+  console.log("name", name, "email", email, "password", password,"address",address,"phone","phone",phone,"image",image,"loyaltypoints",loyaltyPoints);
 
   try {
     const userExists=await User.findOne({$or:[{email,password}]})
@@ -34,7 +35,8 @@ export async function POST(request:Request) {
       role,
       address,
       image,
-      password
+      password,
+      loyaltyPoints:loyaltyPoints
       
     });
 

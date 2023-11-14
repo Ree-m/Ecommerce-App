@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 require("dotenv").config();
+import { CartItemInterface } from "../../cart/[id]/route";
+import { UserInterface } from "../../auth/register/route";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -22,6 +24,7 @@ export async function POST(req: Request) {
 
     const event = stripe.webhooks.constructEvent(body, signature, secret);
 
+
     if (event.type === "checkout.session.completed") {
 
       console.log("heheheehehehehe")
@@ -35,16 +38,23 @@ export async function POST(req: Request) {
 
       // using userId, fetch user data from database
       console.log("userId", userId, userIdObjectId)
-      const user = await User.find({ _id: userIdObjectId })
+      const user: UserInterface[] = await User.find({ _id: userIdObjectId })
 
 
       console.log("1")
-      console.log("ihook user", user,  userId)
+      console.log("ihook user", user, userId)
       console.log("2")
       // Access the customer ID from the webhook payload
       console.log("cutomer", customer)
       const cartItems = JSON.parse(customer.metadata.cart)
-      console.log("in webhook cartItems", cartItems,customer.metadata.userId)
+      let totalPrice = 0;
+
+      // Iterate over each item in the cart and calculate the subtotal
+      for (const item of cartItems) {
+        totalPrice += item.price * item.quantity;
+      }
+      console.log("totalPrice", totalPrice)
+      console.log("in webhook cartItems", cartItems, customer.metadata.userId)
       const order = await Order.create({
         userId: userIdObjectId,
         items: cartItems,
@@ -57,6 +67,14 @@ export async function POST(req: Request) {
       })
       console.log("webhook called")
       await order.save()
+
+
+      // for every 1000 spent, 100 loyalty points are earned
+      const loyaltyPointsEarned: number = Math.floor(totalPrice / 1000 * 100);
+      console.log("loyaltypoints earned")
+
+      user[0].loyaltyPoints = user[0].loyaltyPoints + loyaltyPointsEarned
+      console.log("loyalty points user", user)
     }
 
     return NextResponse.json({ result: event, ok: true });
