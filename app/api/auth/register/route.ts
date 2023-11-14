@@ -20,12 +20,12 @@ export async function POST(request:Request) {
   console.log("name", name, "email", email, "password", password,"address",address,"phone","phone",phone,"image",image);
 
   try {
-    const userExists=await User.findOne({$or:[{email}]})
+    const userExists=await User.findOne({$or:[{email,password}]})
     if (userExists){
       return NextResponse.json("User already exists")
     }
 
-    const hashedPassword = await bcrypt.hash(password, 5);
+    // const hashedPassword = await bcrypt.hash(password, 5);
 
     const user:UserInterface[] = await User.create({
       name,
@@ -34,7 +34,7 @@ export async function POST(request:Request) {
       role,
       address,
       image,
-      password:hashedPassword
+      password
       
     });
 

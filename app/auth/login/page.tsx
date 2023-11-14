@@ -26,17 +26,23 @@ const LoginPage = () => {
         name,
       });
 
+      if (data?.error) {
+        // Handle login error
+        alert("Wrong credentials")
+        console.log("Error login", data?.error);
+      }
+      else {
         // Login successful
-      
+
         setName("");
         setEmail("");
         setPassword("");
         router.push("/");
-        
-      if (data?.error) {
-        // Handle login error
-        console.log("Error login",data?.error);
+
       }
+
+
+
     } catch (error) {
       console.log(error);
     }
@@ -77,7 +83,7 @@ const LoginPage = () => {
 
         </div>
       </form>
-      <button onClick={()=>signIn('google')}>Sign in with Google</button>
+      <button onClick={() => signIn('google')}>Sign in with Google</button>
 
     </div>
   );

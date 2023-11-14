@@ -51,71 +51,37 @@ const handler = NextAuth({
       return session;
     },
 
-    //   async signIn({ user, account }) {
-    //     if (account.provider === "google") {
-    //       const { name, email,image } = user;
-    //       try {
+    
+    // async signIn({ user, account }) {
 
-    //           const response = await fetch("http://localhost:3000/api/auth/register", {
-    //             method: "POST",
-    //             headers: {
-    //               "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //               name,
-    //               email,
-    //               image,
-    //               phone:0,
-    //               role:"user",
-    //               address:""
-    //             }),
-    //           });
 
-    //           if (response.ok) {
-    //             return user;
-    //           }
-    //           console.log("error here response not ok")
+    //   if (account.provider === "google") {
+    //     console.log("google user", user, account)
+    //     try {
+    //       await connectMongo();
 
-    //       } catch (error) {
-    //         console.log(error);
+    //       // check if user already exists
+    //       const userExists = await User.findOne({ email: user.email });
+    //       console.log("user exists", userExists)
+    //       // if not, create a new document and save user in MongoDB
+    //       if (!userExists) {
+    //         await User.create({
+    //           email: user.email,
+    //           name: user.name,
+    //           image: user.image,
+    //           address:"",
+    //           phone:0,
+
+    //         });
     //       }
+
+    //       return true
+    //     } catch (error) {
+    //       console.log("Error checking if user exists: ", error.message);
+    //       return false
     //     }
-
-    //     return user;
-    //   },
+    //   }
     // },
-
-
-    async signIn({ user, account }) {
-      console.log("google user", user, account)
-
-      if (account.provider === "google") {
-        console.log("google user", user, account)
-        try {
-          await connectMongo();
-
-          // check if user already exists
-          const userExists = await User.findOne({ email: user.email });
-          console.log("user exists", userExists)
-          // if not, create a new document and save user in MongoDB
-          if (!userExists) {
-            await User.create({
-              email: user.email,
-              name: user.name,
-              image: user.image,
-              address:"",
-              phone:0,
-
-            });
-          }
-
-          return true
-        } catch (error) {
-          console.log("Error checking if user exists: ", error.message);
-          return false
-        }
-      }
-    },
 
   },
   adapter: MongoDBAdapter(clientPromise),

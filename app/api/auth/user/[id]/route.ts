@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import connectMongo from "@/utils/connectMongo";
 import User from "@/models/User";
+import fs from "fs";
+import multer from "multer";
+
+const upload = multer({ dest: "public/uploads" }); 
+
 
 connectMongo()
+
 
 // delete a user
 export async function DELETE(request: Request) {
@@ -34,16 +40,21 @@ export async function PUT(request: Request) {
         const userId = url?.split("/").pop();
         console.log("userId", userId)
         const { name, email, address, phone } = await request.json();
+        console.log("1")
         console.log(name, email, address, phone)
+        console.log("2")
+        
 
         // Retrieve the existing item from the database
         const existingUser = await User.findOne({ _id: userId });
+        console.log("existsinguser",existingUser)
 
         // Check which fields are being updated and update them
         if (name) existingUser.name = name;
         if (email) existingUser.email = email;
         if (address) existingUser.address = address;
         if (phone) existingUser.phone = phone;
+
 
         // Save the updated item back to the database
         const updatedUser = await existingUser.save();
@@ -59,7 +70,7 @@ export async function PUT(request: Request) {
 
 // fetch one user
 
-export async function GET(request:Request) {
+export async function GET(request: Request) {
     try {
         const { url } = request;
         console.log("url", url)
@@ -67,7 +78,7 @@ export async function GET(request:Request) {
         const userId = url?.split("/").pop();
         console.log("userId", userId)
 
-        const user = await User.find({_id:userId}).select('-password')
+        const user = await User.find({ _id: userId }).select('-password')
         console.log(user)
         return NextResponse.json(user)
     } catch (error) {
