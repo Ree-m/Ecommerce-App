@@ -1,13 +1,15 @@
 import "./globals.css";
 import LiveChat from "./Components/LiveChat";
+import HomePage from "./Components/Home/Home";
 
 export default function Home() {
 
 
   return (
     <main >
-      Home
+      <HomePage/>
       <LiveChat />
+
 
     </main>
   )

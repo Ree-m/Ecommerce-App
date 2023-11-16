@@ -17,7 +17,7 @@ export default function PlaceOrderPanel({ totalPrice, cartItems }: { totalPrice:
     const { name, address, email, phone } = userData;
     console.log("panel order", message, deliveryTime, userData, userData[0], totalPrice)
 
-    const userId = userData[0]._id
+    const userId = userData[0]?._id
 
     const redirectToCheckout = async () => {
         try {

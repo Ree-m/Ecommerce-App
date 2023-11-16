@@ -13,7 +13,8 @@ phone:number,
 role:string,
 address:string,
 image:string,
-loyaltyPoints:number
+loyaltyPoints:number,
+save():unknown
 }
 export async function POST(request:Request) {
   connectMongo();

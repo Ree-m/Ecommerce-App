@@ -16,6 +16,7 @@ const cors = Cors({
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
+
 export async function POST(req: Request) {
   try {
     const body = await req.text();
@@ -73,8 +74,9 @@ export async function POST(req: Request) {
       const loyaltyPointsEarned: number = Math.floor(totalPrice / 1000 * 100);
       console.log("loyaltypoints earned")
 
-      user[0].loyaltyPoints = user[0].loyaltyPoints + loyaltyPointsEarned
-      console.log("loyalty points user", user)
+      user[0].loyaltyPoints += loyaltyPointsEarned
+      await user[0].save();
+      console.log("loyalty points added user", user)
     }
 
     return NextResponse.json({ result: event, ok: true });

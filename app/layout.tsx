@@ -25,7 +25,7 @@ export default function RootLayout({
           <CartProvider>
             <CheckoutDataProvider>
               <body>
-                <Header />
+                {/* <Header /> */}
                 {children}
                 
               </body>
