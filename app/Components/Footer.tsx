@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import React from 'react'
 import { SiVisa } from "react-icons/si";
 import { FaCcMastercard } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";

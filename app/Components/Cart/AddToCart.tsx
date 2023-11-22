@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { CartContext } from "@/app/context/CartContext";
 import { Cart } from "@/app/context/CartContext";
-import { CartItemInterface } from "@/app/api/cart/[id]/route";
+// import { CartItemInterface } from "@/app/api/cart/[id]/route";
 import mongoose from "mongoose";
 
 export default function AddToCart({ item }: { item: ItemInterface }) {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React from 'react';
 import { CategoryInterface } from "../admin/inventory/categories/page";
 async function fetchAllCategories() {
     const response = await fetch(`http://localhost:3000/api/categories`,

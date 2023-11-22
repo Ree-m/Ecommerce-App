@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 // import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import { SessionProvider } from "next-auth/react";
@@ -6,6 +7,7 @@ import Header from "./Components/Header";
 import CartProvider from "./context/CartContext";
 import CheckoutDataProvider from "./context/CheckoutDataContext";
 import UserProvider from "./context/UserContext";
+import Footer from "./Components/Footer";
 // const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata: Metadata = {
@@ -25,8 +27,9 @@ export default function RootLayout({
           <CartProvider>
             <CheckoutDataProvider>
               <body>
-                {/* <Header /> */}
+                <Header />
                 {children}
+                <Footer/>
                 
               </body>
             </CheckoutDataProvider>

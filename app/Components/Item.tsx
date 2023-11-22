@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from "next/link";
 import { ItemInterface } from "../admin/inventory/items/page";
 

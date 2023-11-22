@@ -18,7 +18,9 @@ const config: Config = {
       colors: {
         customYellow: '#F7BC06',
         customBlack:'#0A0A0A',
-        customLightBlack:'rgba(10, 10, 10, 0.60)'
+        customLightBlack:'rgba(10, 10, 10, 0.60)',
+        customLightGrey:'rgba(255, 255, 255, 0.6)',
+        customGrey:'rgba(174, 174, 174, 1)'
       },
 
       fontFamily: {

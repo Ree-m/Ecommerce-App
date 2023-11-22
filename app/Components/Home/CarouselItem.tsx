@@ -1,5 +1,7 @@
 import Image from "next/image";
 import WhiteButton from "../WhiteButton";
+import React from 'react'
+
 export default function CarouselItem({ name, imageSrc, price }: { name: string, imageSrc: string, price: number }) {
 
 
