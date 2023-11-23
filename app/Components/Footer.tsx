@@ -10,7 +10,7 @@ import { AiFillInstagram } from "react-icons/ai";
 export default function Footer() {
 
     return (
-        <div className="bg-greyBackground bg-contain flex justify-around text-white py-12 px-8">
+        <div className="w-full bg-greyBackground bg-contain flex justify-around text-white py-12 px-8 sticky">
             <div className="flex flex-col items-start justify-between ">
                 <div className="flex">
                     <img className="w-full h-auto" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 3.png`} alt={``} />

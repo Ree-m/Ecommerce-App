@@ -20,7 +20,7 @@ export async function middleware(req: any) {
 
 
   //an array of protected routes
-  const protectedRoutes = ['/contact'];
+  const protectedRoutes = ['/profile'];
 
   // Check if the requested URL is in the list of protected routes
   if (protectedRoutes.includes(req.nextUrl.pathname) && !session) {

@@ -13,7 +13,10 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
           'greyBackground':"url('../public/assests/grey-bg.jpg')",
-          'watermark':"url('../public/assests/BarBak_Primary_PMS_page-0001-removebg-preview (1) 1.png')"
+          'watermark':"url('../public/assests/BarBak_Primary_PMS_page-0001-removebg-preview (1) 1.png')",
+          'circleBig':"url('../public/assests/div.trust__illustrations.png')",
+          'circleSmall':"url('../public/assests/div.trust__illustrations (1).png')"
+
       },
       colors: {
         customYellow: '#F7BC06',

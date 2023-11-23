@@ -46,7 +46,7 @@ export default function Header() {
                 <nav>
                     <ul>
                         <li><Link href={``}>Menu</Link></li>
-                        <li><Link href={``}>About</Link></li>
+                        <li><Link href={`/about`}>About</Link></li>
                         <li><Link href={``}>Service</Link></li>
                         <li><Link href={``}>Contact</Link></li>
 
@@ -75,7 +75,7 @@ export default function Header() {
             <nav className="uppercase">
                 <ul className='flex items-center gap-3'>
                     <li><Link href={``}>Menu</Link></li>
-                    <li><Link href={``}>About</Link></li>
+                    <li><Link href={`/about`}>About</Link></li>
                     <li><Link href={``}>Service</Link></li>
                     <li><Link href={``}>Contact</Link></li>
 
