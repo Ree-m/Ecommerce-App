@@ -23,9 +23,9 @@ export default function Footer() {
 
                     <ul className="flex flex-col gap-3">
                         <li><Link href={``}>Menu</Link></li>
-                        <li><Link href={``}>About</Link></li>
+                        <li><Link href={`/about`}>About</Link></li>
                         <li><Link href={``}>Service</Link></li>
-                        <li><Link href={``}>Contact</Link></li>
+                        <li><Link href={`/contact`}>Contact</Link></li>
 
                     </ul>
                 </nav>

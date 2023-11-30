@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { UserInterface } from "@/app/api/auth/register/route";
+import Image from 'next/image'
 
 export default function AddAvatar({ userId, userData }: { userId: string, userData: UserInterface }) {
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export default function AddAvatar({ userId, userData }: { userId: string, userDa
             let formData = new FormData();
             formData.append("image", file);
             console.log(formData.has("image"))
-              
+
 
             const response = await fetch(`http://localhost:3000/api/auth/user/avatar/${userId}`, {
                 method: "PUT",
@@ -49,7 +50,7 @@ export default function AddAvatar({ userId, userData }: { userId: string, userDa
             console.log("responseData", responseData)
             if (responseData.message === "User edited") {
                 console.log("Avatar added");
-                router.refresh(); 
+                router.refresh();
                 setIsEditing(false);
             }
             console.log("avatar not edited")
@@ -60,7 +61,14 @@ export default function AddAvatar({ userId, userData }: { userId: string, userDa
 
     return (
         <div>
-            <button onClick={handleEditClick}>Edit Avatar</button>
+            {/* <button onClick={handleEditClick}>Edit Avatar</button> */}
+            <div className="relative">
+
+                <button onClick={handleEditClick}>
+                    <Image src={`/assests/btn_border_white.png.png`} alt={`Button image`} height={140} width={140} />
+                    <p className="absolute top-6 left-14 pb-[10px] pl-[12px] transform -translate-x-1/2 -translate-y-1/2 text-white text-sm hover:text-customYellow">Edit Avatar</p>
+                </button>
+            </div>
             {isEditing && (
                 <form>
                     <input type="file" onChange={handleFileChange} required />

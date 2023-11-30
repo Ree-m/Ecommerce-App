@@ -41,18 +41,23 @@ export default function ContactForm() {
   };
 
   return (
-    <div>
-      <h3>Contact</h3>
+    <div className="pb-14">
+      <form ref={form} onSubmit={sendEmail} className="bg-[#D9D9D933] rounded-[1rem] p-6 flex flex-col gap-5  text-customYellow w-1/2 mx-auto">
+        <div className="flex gap-10">
+          <input type="text" name="user_name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name*" className="text-customYellow placeholder-customYellow border-[1px] border-customYellow bg-transparent outline-none rounded-lg pl-3 py-1 w-[33%]" />
+          <input type="text" name="user_email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email*" className="text-customYellow placeholder-customYellow border-[1px]  border-customYellow bg-transparent outline-none rounded-lg pl-3 py-1 w-[33%]" />
+        </div>
+        <input type="text" name="subject" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject*" className="text-customYellow placeholder-customYellow border-[1px] border-customYellow bg-transparent outline-none rounded-lg pl-3 py-1 w-[75%]" />
 
-      <form ref={form} onSubmit={sendEmail}>
-        <input type="text" name="user_name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-        <input type="text" name="user_email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-        <input type="text" name="subject" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" />
-        <input type="text" name="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message" />
-        <button>Send</button>
+        <textarea name="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message*" className="text-customYellow border-[1px] border-customYellow placeholder-customYellow bg-transparent outline-none rounded-lg pl-3 py-1 h-[100px] " />
+        <div className="flex justify-center">
+          <button className="bg-customYellow text-black uppercase font-semibold py-2 px-6 rounded-full w-1/4">Send</button>
+
+        </div>
       </form>
-
     </div>
+
+
   );
 };
 

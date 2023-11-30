@@ -13,7 +13,7 @@ export default function AddCategoryPage() {
 
 
     async function addCategory(e: React.FormEvent<HTMLFormElement>) {
-        try {
+        try{
             e.preventDefault();
             let formData = new FormData();
             formData.append("name", name);

@@ -36,58 +36,59 @@ export default function Header() {
     console.log("header,cart userData", cart, cartLength, userData)
     // let cartItemsLength:number=cart[0]?.items?.length || 0
 
-    if (status === 'authenticated' && username) {
-        return (
-            <div className="bg-greyBackground">
-                <div className="flex">
-                    <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 3.png`} alt={``} />
-                    <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 1.png`} alt={``} />
-                </div>
-                <nav>
-                    <ul>
-                        <li><Link href={``}>Menu</Link></li>
-                        <li><Link href={`/about`}>About</Link></li>
-                        <li><Link href={``}>Service</Link></li>
-                        <li><Link href={``}>Contact</Link></li>
+    // if (status === 'authenticated' && username) {
+    //     return (
+    //         <div className="bg-greyBackground">
+    //             <div className="flex">
+    //                 <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 3.png`} alt={``} />
+    //                 <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 1.png`} alt={``} />
+    //             </div>
+    //             <nav>
+    //                 <ul>
+    //                     <li><Link href={``}>Menu</Link></li>
+    //                     <li><Link href={`/about`}>About</Link></li>
+    //                     <li><Link href={``}>Service</Link></li>
+    //                     <li><Link href={`/contact`}>Contact</Link></li>
 
-                    </ul>
-                </nav>
+    //                 </ul>
+    //             </nav>
 
-                <div>
-                    <i><Link href={``}><BsPersonCircle /></Link></i>
-                    <i><Link href={``}><PiBag /></Link></i>
+    //             <div>
+    //                 <i><Link href={`/profile/${userId}`}><BsPersonCircle /></Link></i>
+    //                 <i><Link href={``}><PiBag /></Link></i>
 
-                </div>
+    //             </div>
 
-                <p>Hi, {username}</p>
-                <button onClick={() => signOut()}>signOut</button>
+    //             <p>Hi, {username}</p>
+    //             <button onClick={() => signOut()}>signOut</button>
 
-            </div>
-        )
-    }
+    //         </div>
+    //     )
+    // }
 
     return (
-        <div className="bg-greyBackground bg-contain  text-white flex justify-around items-center">
+        <div className="bg-greyBackground text-white flex justify-around items-center">
+            <Link href={`/`}>
             <div className="flex">
                 <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 3.png`} alt={``} />
                 <img className="" src={`/assests/BarBak_Primary_PMS_page-0001-removebg-preview 1.png`} alt={``} />
             </div>
+            </Link>
             <nav className="uppercase">
                 <ul className='flex items-center gap-3'>
                     <li><Link href={``}>Menu</Link></li>
                     <li><Link href={`/about`}>About</Link></li>
                     <li><Link href={``}>Service</Link></li>
-                    <li><Link href={``}>Contact</Link></li>
+                    <li><Link href={`/contact`}>Contact</Link></li>
 
                 </ul>
             </nav>
 
             <div className='flex items-center  gap-3 text-2xl'>
-                <i><Link href={``}><BsPersonCircle /></Link></i>
+                <i><Link href={`/profile/${userId}`}><BsPersonCircle /></Link></i>
                 <i><Link href={``}><PiBag /></Link></i>
 
             </div>
-            {/* {!username && <Link href="/auth/login">Login</Link>} */}
 
         </div>
     )

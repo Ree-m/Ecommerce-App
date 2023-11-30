@@ -66,7 +66,7 @@ export default function HomePage() {
 
 
           <div className="flex flex-col justify-center items-center gap-1 px-10 py-10 hover:border-opacity-50 hover:border-yellow-500 hover:bg-opacity-40 hover:shadow-lg transition-all duration-300">
-            <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Alcohol<br />Depot Delivery
+            <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Restaurant<br />Depot Delivery
             </h4>
             <p className="text-[12px] leading-6 text-customLightBlack pb-8">We give you hours of your precious life back, with full price transparency, by supplying everything you need to run your business from our fulfillment centers to your shelves and fridges.
             </p>

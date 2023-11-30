@@ -1,9 +1,10 @@
-import ContactForm from "../Components/Contact/ContactForm";
-export default function ContactPage(){
+import "../globals.css";
+import React from "react";
+import Contact from "../Components/Contact/Contact";
+export default function ContactPage() {
   return (
     <div>
-        <ContactForm/>
-
+      <Contact />
     </div>
   )
 }

@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { UserInterface } from "@/app/api/auth/register/route";
+import Image from "next/image";
 
 export default function EditProfile({ userId, userData }: { userId: string, userData: UserInterface }) {
     const [name, setName] = useState<string>(userData.name)
@@ -46,12 +47,18 @@ export default function EditProfile({ userId, userData }: { userId: string, user
 
     return (
         <div>
+        <div className="relative">
+
+            
             <button onClick={handleEditClick}>
-                Edit Proflie
+                <Image src={`/assests/btn_border_white.png.png`} alt={`Button image`} height={140} width={140} />
+                <p className="absolute top-6 left-14 pb-[10px] pl-[12px] transform -translate-x-1/2 -translate-y-1/2 text-white text-sm hover:text-customYellow">Edit Profile</p>
             </button>
+            </div>
+
             {isEditing && (
 
-                <form>
+                <form className="p-6">
                     <label>Name</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 

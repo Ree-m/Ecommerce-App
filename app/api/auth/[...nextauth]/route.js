@@ -24,9 +24,9 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         connectMongo();
         console.log("starting credientials login");
-        const { email, password, name } = credentials;
+        const { email, password } = credentials;
         console.log("credentials backend ", credentials);
-        let user = await User.findOne({ email, name, password });
+        let user = await User.findOne({ email,password });
         if (!user) {
           throw new Error("Invalid Email or Password");
         }

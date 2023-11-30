@@ -1,4 +1,6 @@
+import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 export default function About() {
     return (
@@ -50,7 +52,7 @@ export default function About() {
             {/* Why you can trust us */}
             <div className="px-14">
                 <div className="px-5 py-20 relative">
-                <span className="absolute top-[18%] left-[90%] transform -translate-x-1/2 -translate-y-1/2 bg-circleSmall bg-no-repeat w-24 h-24"></span>
+                    <span className="absolute top-[18%] left-[90%] transform -translate-x-1/2 -translate-y-1/2 bg-circleSmall bg-no-repeat w-24 h-24"></span>
 
                     <h3 className="text-center text-5xl pb-10  relative z-10 ">Why you can <span className="text-customYellow">trust</span> us</h3>
                     <span className="absolute top-1/4 left-[95%] transform -translate-x-1/2 -translate-y-1/2 bg-circleBig bg-no-repeat w-24 h-24"></span>
@@ -83,55 +85,219 @@ export default function About() {
 
                 </div>
 
+            </div>
+
+            {/* client testimonials */}
+            <div className="bg-greyBackground bg-contain px-36 py-14">
+                <h3 className="text-customYellow text-4xl capitalize text-center pb-10">A Message From Joe Valley,<br/> Vice President Resturant Depot</h3>
+                <div className="flex justify-center items-center gap-10">
+                    <img src="/assests/ce830f_a429e1d23f1549ea96840bab0a21ed0d_mv2-removebg-preview 1.png" alt="" className="w-1/6 h-auto" />
+                    <div className="flex flex-col gap-3 text-white bg-[#D9D9D933] p-8 rounded-br-[1rem] rounded-tl-[1rem]">
+                        <p>For almost 40 years, Restaurant Depot has been committed to helping independently owned and operated restaurants succeed. We operate more than 140 cash & carry warehouses across the US.</p>
+                        <p> Over the past few years, our members asked for more ways to shop, including a delivery option. We knew we needed delivery partners that we could trust with our customers. We partnered with BarBak in our Charlotte, NC branch and the results exceeded our expectations. Customers were delighted by BarBak’s customer service and willingness to go the extra mile to make sure every order is right and on time</p>
+                        <p>BarBak now operates our delivery service in 5 locations with plans to expand. “We’re proud to have BarBak as a premier delivery partner and look forward to working together to help every RD customer succeed by saving them money over the costs of traditional food service delivery companies – Restaurant Depot.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            {/* We create an excellent service built on values */}
+            <div>
+                <div className="flex justify-start" >
+                    <img src="/assests/div.reason-section__petrushka0.png" alt="decrotive image of a leaf" />
+
+                </div>
+
+                <div className="flex flex-col items-center p-10">
+                    <div className="flex">
+                        <img src="/assests/div.reason-section__petrushka1.png" alt="decrotive image of a leaf" className="self-start" />
+
+                        <div className="flex flex-col items-center">
+                            <h3 className="text-5xl px-64 leading-normal text-center pb-10">We create an excellent service built on values</h3>
+                            <p className="text-customBlack font-light pb-20">The quality of our product is very important to us and we take care of our employees to take care of our customers</p>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-40">
+                        <div className="flex flex-col gap-5 items-center">
+                            <img src="/assests/SVG (4).png" alt="" />
+                            <span className="text-customBlack">Loyalty</span>
+                        </div>
+
+                        <div className="flex flex-col gap-5 items-center">
+                            <img src="/assests/SVG (5).png" alt="" />
+                            <span className="text-customBlack">Sincerity</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-5">
+                            <img src="/assests/SVG (6).png" alt="" />
+                            <span className="text-customBlack">Trust</span>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-5">
+                            <img src="/assests/SVG (7).png" alt="" />
+                            <span className="text-customBlack">Team work</span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div className="flex justify-end" >
+                    <img src="/assests/div.team__cabbage.png" alt="decrotive image of a cabbage" />
+
+                </div>
 
             </div>
 
+
             {/* Team */}
             <div className="bg-greyBackground bg-contain p-14">
-                <h3 className="text-white text-center text-5xl">Team</h3>
+                <h3 className="text-white text-center text-5xl pb-10">Team</h3>
                 <div className="flex flex-wrap gap-3">
                     <div className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
                         <h6 className="text-white uppercase text-xl">Name</h6>
                         <span className="text-customGrey">CEO, co-owner</span>
                     </div>
 
-                    <div  className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
-                        <h6 className="text-white uppercase text-xl">Name</h6>
-                        <span className="text-customGrey">Position</span>
-                    </div>
-
-                    <div  className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
-                        <h6 className="text-white uppercase text-xl">Name</h6>
-                        <span className="text-customGrey">Position</span>
-                    </div>
-
-                    <div  className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
+                    <div className="flex flex-col gap-2">
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
                         <h6 className="text-white uppercase text-xl">Name</h6>
                         <span className="text-customGrey">Position</span>
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
                         <h6 className="text-white uppercase text-xl">Name</h6>
                         <span className="text-customGrey">Position</span>
                     </div>
 
-                    <div  className="flex flex-col gap-2">
-                        <img src="/assests/profile-pic-dummy 1.png" alt="" />
+                    <div className="flex flex-col gap-2">
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
                         <h6 className="text-white uppercase text-xl">Name</h6>
                         <span className="text-customGrey">Position</span>
                     </div>
 
-                    <div  className="flex flex-col gap-2">
-                        <img className="pb-2" src="/assests/profile-pic-dummy 1.png" alt="" />
+                    <div className="flex flex-col gap-2">
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
+                        <h6 className="text-white uppercase text-xl">Name</h6>
+                        <span className="text-customGrey">Position</span>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
+                        <h6 className="text-white uppercase text-xl">Name</h6>
+                        <span className="text-customGrey">Position</span>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <img className="w-[70%] h-auto" src="/assests/profile-pic-dummy 1.png" alt="" />
                         <h6 className="text-white uppercase text-xl">Name</h6>
                         <span className="text-customGrey">Position</span>
                     </div>
                 </div>
+            </div>
+
+            {/* Try our services */}
+            <div className="w-full px-14">
+
+
+                <div className=" flex gap-20">
+                    <div className="flex-shrink-0 gap-8 mr-6">
+                        <Image src={`/assests/div.links-block0__bg (3).png`} alt={``} height={327} width={282} />
+                    </div>
+                    <div className="  flex justify-center items-end pl-4">
+                        <h3 className="text-customBlack text-3xl text-center font-medium pb-10">It's time to try our services</h3>
+                    </div>
+                </div>
+
+
+
+
+                <div className="flex justify-center px-5 pt-5 pb-10">
+
+                    <div className="flex flex-col justify-center items-center gap-1 px-10 py-10 hover:border-opacity-50 hover:border-yellow-500 hover:bg-opacity-40 hover:shadow-lg transition-all duration-300">
+                        <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Hospitality<br />Couriers
+                        </h4>
+                        <p className="text-[12px] leading-6 text-customLightBlack pb-8">We give you hours of your precious life back, with full price transparency, by supplying everything you need to run your business from our fulfillment centers to your shelves and fridges.
+                        </p>
+
+                        <div className="relative">
+
+                            <Link href={``}>
+
+                                <Image src={`/assests/btn-border_black.png.png`} alt={``} height={140} width={140} />
+
+                                <p className="absolute top-6 left-14 pb-[10px] pl-[8px] transform -translate-x-1/2 -translate-y-1/2 text-customBlack text-sm hover:text-customYellow font-bold">Learn More</p>
+                            </Link>
+                        </div>
+
+                    </div>
+
+
+                    <div className="flex flex-col justify-center items-center gap-1 px-10 py-10 hover:border-opacity-50 hover:border-yellow-500 hover:bg-opacity-40 hover:shadow-lg transition-all duration-300">
+                        <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Restaurant<br />Depot Delivery
+                        </h4>
+                        <p className="text-[12px] leading-6 text-customLightBlack pb-8">We give you hours of your precious life back, with full price transparency, by supplying everything you need to run your business from our fulfillment centers to your shelves and fridges.
+                        </p>
+
+
+                        <div className="relative">
+
+                            <Link href={``}>
+                                <Image src={`/assests/btn-border_black.png.png`} alt={``} height={140} width={140} />
+                                <p className="absolute top-6 left-14 pb-[10px] pl-[8px] transform -translate-x-1/2 -translate-y-1/2 text-customBlack text-sm hover:text-customYellow font-bold">Learn More</p>
+                            </Link>
+                        </div>
+
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center gap-1 px-10 py-10 hover:border-opacity-50 hover:border-yellow-500 hover:bg-opacity-40 hover:shadow-lg transition-all duration-300">
+                        <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Alcohol<br />Delivery
+                        </h4>
+                        <p className="text-[12px] leading-6 text-customLightBlack pb-8">We give you hours of your precious life back, with full price transparency, by supplying everything you need to run your business from our fulfillment centers to your shelves and fridges.
+                        </p>
+
+
+                        <div className="relative">
+
+                            <Link href={``}>
+                                <Image src={`/assests/btn-border_black.png.png`} alt={``} height={140} width={140} />
+                                <p className="absolute top-6 left-14 pb-[10px] pl-[8px] transform -translate-x-1/2 -translate-y-1/2 text-customBlack text-sm hover:text-customYellow font-bold">Learn More</p>
+                            </Link>
+                        </div>
+
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center gap-1 px-10 py-10 hover:border-opacity-50 hover:border-yellow-500 hover:bg-opacity-40 hover:shadow-lg transition-all duration-300">
+                        <h4 className="text-customBlack hover:text-customYellow text-xl py-4 uppercase text-center">Commercial<br />Cleaning
+                        </h4>
+                        <p className="text-[12px] leading-6 text-customLightBlack pb-8">We give you hours of your precious life back, with full price transparency, by supplying everything you need to run your business from our fulfillment centers to your shelves and fridges.
+                        </p>
+
+
+                        <div className="relative">
+
+                            <Link href={``}>
+                                <Image src={`/assests/btn-border_black.png.png`} alt={``} height={140} width={140} />
+                                <p className="absolute top-6 left-14 pb-[10px] pl-[8px] transform -translate-x-1/2 -translate-y-1/2 text-customBlack text-sm hover:text-customYellow font-bold">Learn More</p>
+                            </Link>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <div className="flex justify-end w-full">
+                    <Image className="mr-32" src={`/assests/div.links-block0__bg.png`} alt={``} height={100} width={100} />
+                    <Image src={`/assests/div.links-block0__bg (1).png`} alt={``} height={100} width={100} />
+                    <Image src={`/assests/div.links-block0__bg (2).png`} alt={``} height={100} width={100} />
+
+                </div>
+
             </div>
 
         </div>
