@@ -6,7 +6,7 @@ export default function Home() {
 
 
   return (
-    <main >
+    <main className="body">
       <HomePage/>
       <LiveChat />
 

@@ -2,21 +2,24 @@ import { NextResponse } from 'next/server';
 import { getSession } from 'next-auth/react';
 import { getToken } from 'next-auth/jwt';
 
-async function fetchAUser(userId: string | undefined) {
-  const response = await fetch(`http://localhost:3000/api/auth/user/${userId}`,
-    {
-      cache: 'no-cache',
-    }
-  )
-  const data = await response.json();
-  return data;
-}
+  async function fetchAUser(userId: string | undefined) {
+    const response = await fetch(`http://localhost:3000/api/auth/user/${userId}`,
+      {
+        cache: 'no-cache',
+      }
+    )
+    const data = await response.json();
+    return data;
+  }
+
+
+
 
 export async function middleware(req: any) {
   const session = await getToken({ req: req, secret: process.env.NEXTAUTH_SECRET });
 
   const userId: string | undefined = session?.sub
-  const userData = await fetchAUser(userId)
+  const userData = userId && await fetchAUser(userId)
 
 
   //an array of protected routes
