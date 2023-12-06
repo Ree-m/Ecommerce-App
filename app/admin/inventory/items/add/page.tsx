@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 export default function AddItemPage() {
     const [name, setName] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
     const [parentCategory, setParentCategory] = useState<string>("")
     const [position, setPosition] = useState<number | undefined>(undefined)
     const [price, setPrice] = useState<number | undefined>(undefined)
@@ -23,6 +24,7 @@ export default function AddItemPage() {
             console.log("State values: name", name, "parentCategory", parentCategory, "position", position, "price", price, "image", image, "status", status);
             let formData = new FormData();
             formData.append("name", name);
+            formData.append("description", description);
             formData.append("parentCategory", parentCategory)
             formData.append("position", position)
             formData.append("price", price)
@@ -71,7 +73,8 @@ export default function AddItemPage() {
             <form onSubmit={addItem}>
                 <label>Name</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-
+                <label>Description</label>
+                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
                 <label>Parent Category</label>
                 <input type="text" value={parentCategory} onChange={(e) => setParentCategory(e.target.value)} />
                 <label>Position</label>

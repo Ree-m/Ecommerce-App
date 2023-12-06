@@ -10,10 +10,10 @@ export default async function MenuPage() {
 
 
     return (
-        <section className="  ">
+        <section className="">
             <h3 className="text-white text-4xl 2xl:text-5xl 3xl:text-7xl pb-5 2xl:pb-8 3xl:pb-10">We recommend</h3>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
                 <div className="bg-black rounded-[1rem] p-3 flex flex-col gap-3">
                     <img src="/assests/foodImages/Link → Picture → 548733-401b7149-a046-484e-9f56-3bcd6e49f3a3.webp (1).png" alt="Image of this foof item" />
                     <p className="text-white text-lg 2xl:text-2xl 3xl:text-3xl">Food 1</p>

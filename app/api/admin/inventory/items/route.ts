@@ -18,6 +18,8 @@ export async function POST(request: Request) {
         const price = formData.get("price")
         const image = formData.get("image")
         const status = formData.get("status")
+        const description = formData.get("description");
+
 
         console.log("name and all", name, parentCategory, position, price, image, status)
         const category = await Category.findOne({ name: parentCategory });
@@ -41,7 +43,8 @@ export async function POST(request: Request) {
             position,
             price,
             image: fileName,
-            status
+            status,
+            description
         })
         console.log(itemDoc)
 

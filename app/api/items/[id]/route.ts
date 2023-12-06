@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Item from "@/models/Item";
 import Category from "@/models/Category";
 import connectMongo from "@/utils/connectMongo";
-import { Types } from 'mongoose'
+import mongoose from 'mongoose'
 connectMongo()
 
 // fetch all items of one category
@@ -11,10 +11,11 @@ export async function GET(request: Request) {
         const { url } = request;
         console.log("url", url)
 
-        const categoryName = url?.split("/").pop();
-        console.log("name", categoryName)
+        const categoryId:string|undefined= url?.split("/").pop();
+        const categoryIdObjectId :object=  new mongoose.Types.ObjectId(categoryId)
+        console.log("categoryId", categoryIdObjectId)
 
-        const category = await Category.findOne({ name: categoryName });
+        const category = await Category.findOne({ _id: categoryIdObjectId });
         console.log("category", category, category._id)
 
         if (category) {
