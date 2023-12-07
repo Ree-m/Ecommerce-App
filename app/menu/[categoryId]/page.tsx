@@ -47,7 +47,7 @@ export default async function MenuPage({ params }: { params: { categoryId: strin
                 <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
 
                     {items.length > 0 && items.map((item: any, index: number) => (
-                        <Item key={index} item={item} categoryName={categoryName} />
+                        <Item key={index} item={item} categoryId={categoryId} />
                     ))}
                 </div>
 
